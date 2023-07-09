@@ -1,5 +1,6 @@
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
 {
     public class ItemView : MonoBehaviour
     {
+        // Constants
+        private const float MOVE_TWEEN_TIME = 0.2f;
+
         // Serialize Fields
         [SerializeField]
         private ItemType itemType;
@@ -49,7 +53,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             this.gridPosition = gridPosition;
 
             // Set position
-            transform.position = gridPresenter.GridPositionToWorldPosition(gridPosition);
+            var newPosition = gridPresenter.GridPositionToWorldPosition(gridPosition);
+            transform.DOMove(newPosition, MOVE_TWEEN_TIME);
         }
     }
 }
