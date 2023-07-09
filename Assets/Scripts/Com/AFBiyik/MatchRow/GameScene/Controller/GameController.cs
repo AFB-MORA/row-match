@@ -7,15 +7,26 @@ using UnityEngine;
 
 namespace Com.AFBiyik.MatchRow.GameScene.Controller
 {
+    /// <summary>
+    /// Controls gameplay
+    /// </summary>
     public class GameController : IDisposable
     {
+        // Private Readonly Fields
         private readonly CompositeDisposable disposables = new CompositeDisposable();
         private readonly IGridPresenter gridPresenter;
 
+        /// <summary>
+        /// Creates game controller
+        /// </summary>
+        /// <param name="swipeEvent">Swipe Event</param>
+        /// <param name="gridPresenter">Grid Presenter</param>
         public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter)
         {
+            // Set grid presenter
             this.gridPresenter = gridPresenter;
 
+            // Subscribe swipe event
             swipeEvent.OnSwipe
                 .Subscribe(OnSwipe)
                 .AddTo(disposables);
@@ -26,22 +37,36 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             disposables.Dispose();
         }
 
+        /// <summary>
+        /// Called when swipe
+        /// </summary>
+        /// <param name="input"></param>
         private void OnSwipe(SwipeModel input)
         {
+            // Get gits
             var hit = Physics2D.Raycast(input.StartPosition, Vector2.zero);
 
+            // If hit
             if (hit.collider != null)
             {
+                // Swipe items
                 var item = hit.collider.GetComponent<ItemView>();
                 SwipeItem(item, input.Direction);
             }
         }
 
+        /// <summary>
+        /// Swipes item 
+        /// </summary>
+        /// <param name="item">Item to swipe</param>
+        /// <param name="direction">Swipe direction</param>
         private void SwipeItem(ItemView item, SwipeDirection direction)
         {
+            // Get positions
             Vector2Int gridPosition = item.GridPosition;
             Vector2Int nextPosition = new Vector2Int(-1, -1);
 
+            // Get next position
             switch (direction)
             {
                 case SwipeDirection.Up:
@@ -58,27 +83,35 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
                     break;
             }
 
+            // Check next position
             if (nextPosition.x < 0 || nextPosition.x >= gridPresenter.Colums ||
                 nextPosition.y < 0 || nextPosition.y >= gridPresenter.Rows)
             {
                 return;
             }
 
+            // Get indicies
             int itemIndex = gridPresenter.GetItemIndex(gridPosition);
             int nextIndex = gridPresenter.GetItemIndex(nextPosition);
 
+            // Move first item
             gridPresenter.Grid.Move(itemIndex, nextIndex);
 
+            // Get next index
             int movedNextIndex;
+            // If next index is bigger than old index
             if (nextIndex > itemIndex)
             {
+                // List is moved forward
                 movedNextIndex = nextIndex - 1;
             }
             else
             {
+                // List is moved backward
                 movedNextIndex = nextIndex + 1;
             }
 
+            // Move second item
             gridPresenter.Grid.Move(movedNextIndex, itemIndex);
         }
     }

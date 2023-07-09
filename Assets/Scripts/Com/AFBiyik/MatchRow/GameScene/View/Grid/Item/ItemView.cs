@@ -1,4 +1,3 @@
-using System;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using UnityEngine;
@@ -48,9 +47,6 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         {
             // Set grid position
             this.gridPosition = gridPosition;
-
-            // Set object name
-            //gameObject.name = $"({gridPosition.x}, {gridPosition.y})";
 
             // Set position
             transform.position = gridPresenter.GridPositionToWorldPosition(gridPosition);

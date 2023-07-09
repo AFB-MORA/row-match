@@ -50,6 +50,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.Input
             DisposeDetection();
         }
 
+        /// <summary>
+        /// Called when touch stars
+        /// </summary>
+        /// <param name="ctx"></param>
         private async void StartTouch(InputAction.CallbackContext ctx)
         {
             // Hack: To get correct position wait 1 frame.
@@ -67,6 +71,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.Input
 
         }
 
+        /// <summary>
+        /// Called when touch ends
+        /// </summary>
+        /// <param name="ctx"></param>
         private void EndTouch(InputAction.CallbackContext ctx)
         {
             // Dispose detection
@@ -84,7 +92,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Input
         }
 
         /// <summary>
-        /// Checks swipe.
+        /// Called during touch. Checks swipe.
         /// </summary>
         private void DetectSwipe()
         {

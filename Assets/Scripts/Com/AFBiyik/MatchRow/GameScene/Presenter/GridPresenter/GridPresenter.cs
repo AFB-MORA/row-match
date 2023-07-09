@@ -63,11 +63,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             return new Vector2(x, y);
         }
 
+        /// <inheritdoc/>
         public int GetItemIndex(Vector2Int gridPosition)
         {
             return gridPosition.y * columns + gridPosition.x;
         }
 
+        /// <inheritdoc/>
         public Vector2Int GetItemGridPosition(int index)
         {
             int x = index % columns;

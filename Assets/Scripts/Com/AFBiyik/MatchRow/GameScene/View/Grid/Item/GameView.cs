@@ -4,7 +4,6 @@ using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using UniRx;
 using UnityEngine;
 using Zenject;
-using static UnityEditor.Progress;
 
 namespace Com.AFBiyik.MatchRow.GameScene.View
 {
@@ -50,20 +49,22 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
                 .Subscribe(OnMove);
         }
 
+        /// <summary>
+        /// Called when list moves
+        /// </summary>
+        /// <param name="moveEvent"></param>
         private void OnMove(CollectionMoveEvent<ItemType> moveEvent)
         {
+            // Get new grid position
             Vector2Int newGridPosition = gridPresenter.GetItemGridPosition(moveEvent.NewIndex);
+
+            // Move item to new grid position
             items[moveEvent.OldIndex].MoveTo(newGridPosition);
 
+            // Move item view in the list
             var val = items[moveEvent.OldIndex];
             items.RemoveAt(moveEvent.OldIndex);
             items.Insert(moveEvent.NewIndex, val);
-
-            for (int i = 0; i < items.Count; i++)
-            {
-                items[i].transform.SetSiblingIndex(i);
-            }
-
         }
     }
 }
