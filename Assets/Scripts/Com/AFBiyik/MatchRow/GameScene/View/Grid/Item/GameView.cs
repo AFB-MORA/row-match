@@ -47,6 +47,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             gridPresenter.Grid.ObserveMove()
                 .TakeUntilDestroy(gameObject)
                 .Subscribe(OnMove);
+
+            gridPresenter.Grid.ObserveReplace()
+                .TakeUntilDestroy(gameObject)
+                .Subscribe(OnReplace);
         }
 
         /// <summary>
@@ -65,6 +69,15 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             var val = items[moveEvent.OldIndex];
             items.RemoveAt(moveEvent.OldIndex);
             items.Insert(moveEvent.NewIndex, val);
+        }
+
+        /// <summary>
+        /// Called when list item replaces
+        /// </summary>
+        /// <param name="event"></param>
+        private void OnReplace(CollectionReplaceEvent<ItemType> replaceEvent)
+        {
+            items[replaceEvent.Index].UpdateType(replaceEvent.NewValue);
         }
     }
 }

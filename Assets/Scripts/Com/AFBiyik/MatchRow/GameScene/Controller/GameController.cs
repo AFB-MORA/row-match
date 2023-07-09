@@ -1,4 +1,5 @@
 using System;
+using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.GameScene.View;
@@ -113,6 +114,54 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
 
             // Move second item
             gridPresenter.Grid.Move(movedNextIndex, itemIndex);
+
+            // Check Rows
+            CheckRows();
         }
+
+        private void CheckRows()
+        {
+            for (int y = 0; y < gridPresenter.Rows; y++)
+            {
+                int firstIndex = gridPresenter.GetItemIndex(new Vector2Int(0, y));
+                var firstItem = gridPresenter.Grid[firstIndex];
+
+                if (firstItem != ItemType.Completed)
+                {
+                    if (CheckRow(y, firstItem))
+                    {
+                        CompleteRow(y, firstItem);
+                    }
+                }
+            }
+        }
+
+        private bool CheckRow(int y, ItemType firstItem)
+        {
+            for (int x = 1; x < gridPresenter.Colums; x++)
+            {
+                int index = gridPresenter.GetItemIndex(new Vector2Int(x, y));
+                var item = gridPresenter.Grid[index];
+
+                if (item != firstItem)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void CompleteRow(int y, ItemType firstItem)
+        {
+            for (int x = 0; x < gridPresenter.Colums; x++)
+            {
+                int index = gridPresenter.GetItemIndex(new Vector2Int(x, y));
+                gridPresenter.Grid[index] = ItemType.Completed;
+            }
+
+            // TODO score
+        }
+
     }
 }
