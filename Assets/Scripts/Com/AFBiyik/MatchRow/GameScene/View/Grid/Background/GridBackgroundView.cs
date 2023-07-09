@@ -8,7 +8,7 @@ namespace Com.AFBiyik.MatchRow.GameScene
     /// </summary>
     public class GridBackgroundView : MonoBehaviour
     {
-        // Serialkize Fields
+        // Serialize Fields
         [SerializeField]
         private Transform gridCellContent;
         [SerializeField]

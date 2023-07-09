@@ -50,7 +50,7 @@ namespace Com.AFBiyik.MatchRow.GameScene
 
             // Calculate origin
             float width = colums * cellSize;
-            float height = colums * cellSize;
+            float height = rows * cellSize;
             origin = rect.position - new Vector2(width / 2f, height / 2f);
         }
 
