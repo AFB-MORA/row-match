@@ -78,15 +78,19 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// <summary>
         /// Changes item type.
         /// </summary>
-        /// <param name="itemType">New item type</param>
-        public void UpdateType(ItemType itemType)
+        /// <param name="newItemType">New item type</param>
+        public void UpdateType(ItemType newItemType)
         {
-            if (itemType == ItemType.Completed)
+            if (itemType != ItemType.Completed && newItemType == ItemType.Completed)
             {
+                itemType = newItemType;
                 ShowCompleted();
             }
         }
 
+        /// <summary>
+        /// Shows completed animation
+        /// </summary>
         private async void ShowCompleted()
         {
             await UniTask.Delay((int)(MOVE_TWEEN_TIME * 1000));

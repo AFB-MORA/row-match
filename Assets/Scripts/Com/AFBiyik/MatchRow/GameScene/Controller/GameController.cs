@@ -63,6 +63,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         /// <param name="direction">Swipe direction</param>
         private void SwipeItem(ItemView item, SwipeDirection direction)
         {
+            // Check if completed
+            if (item.ItemType == ItemType.Completed)
+            {
+                return;
+            }
+
             // Get positions
             Vector2Int gridPosition = item.GridPosition;
             Vector2Int nextPosition = new Vector2Int(-1, -1);
@@ -94,6 +100,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             // Get indicies
             int itemIndex = gridPresenter.GetItemIndex(gridPosition);
             int nextIndex = gridPresenter.GetItemIndex(nextPosition);
+
+            // Check if next completed
+            ItemType nextItem = gridPresenter.Grid[nextIndex];
+            if (nextItem == ItemType.Completed)
+            {
+                return;
+            }
 
             // Move first item
             gridPresenter.Grid.Move(itemIndex, nextIndex);
