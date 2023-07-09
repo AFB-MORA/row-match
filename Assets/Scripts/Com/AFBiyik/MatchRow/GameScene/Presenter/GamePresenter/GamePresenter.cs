@@ -1,7 +1,7 @@
 using Com.AFBiyik.MatchRow.LevelSystem;
 using UniRx;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
     public class GamePresenter
     {

@@ -1,18 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class IGamePresenter : MonoBehaviour
+namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IGamePresenter
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

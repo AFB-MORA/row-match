@@ -1,4 +1,6 @@
-namespace Com.AFBiyik.MatchRow.GameScene
+using Com.AFBiyik.MatchRow.GameScene.Enumeration;
+
+namespace Com.AFBiyik.MatchRow.GameScene.Util
 {
     /// <summary>
     /// String extensions

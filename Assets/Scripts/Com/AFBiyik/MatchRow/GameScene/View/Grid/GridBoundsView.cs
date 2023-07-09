@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.View
 {
     /// <summary>
     /// Calculates bounds responsively.

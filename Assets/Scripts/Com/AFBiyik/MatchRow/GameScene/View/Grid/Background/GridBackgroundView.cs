@@ -1,7 +1,8 @@
+using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using UnityEngine;
 using Zenject;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.View
 {
     /// <summary>
     /// Initializes grid background.

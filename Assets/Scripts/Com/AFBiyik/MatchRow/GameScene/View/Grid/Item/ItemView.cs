@@ -1,7 +1,9 @@
+using Com.AFBiyik.MatchRow.GameScene.Enumeration;
+using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using UnityEngine;
 using Zenject;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.View
 {
     public class ItemView : MonoBehaviour
     {

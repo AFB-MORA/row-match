@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.Factory;
+using Com.AFBiyik.MatchRow.GameScene.Factory;
 using Com.AFBiyik.MatchRow.GameScene.Input;
+using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using Com.AFBiyik.MatchRow.GameScene.View;
 using Com.AFBiyik.MatchRow.LevelSystem;
 using UnityEngine;
 using Zenject;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.Installer
 {
     /// <summary>
     /// Install game scene dependencies

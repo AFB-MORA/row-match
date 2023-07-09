@@ -1,4 +1,4 @@
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.Enumeration
 {
     /// <summary>
     /// Grid Item Type

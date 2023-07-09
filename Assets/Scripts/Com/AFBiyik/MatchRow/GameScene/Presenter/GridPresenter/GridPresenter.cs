@@ -1,10 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
+using Com.AFBiyik.MatchRow.GameScene.Enumeration;
+using Com.AFBiyik.MatchRow.GameScene.Util;
 using Com.AFBiyik.MatchRow.LevelSystem;
 using UniRx;
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
     /// <inheritdoc/>
     public class GridPresenter : IGridPresenter
@@ -13,11 +14,11 @@ namespace Com.AFBiyik.MatchRow.GameScene
         private readonly float cellSize;
         private readonly int rows;
         private readonly int colums;
-        private readonly List<ItemType> grid;
+        private readonly ReactiveCollection<ItemType> grid;
         private readonly Vector2 origin;
 
         /// <inheritdoc/>
-        public List<ItemType> Grid => grid;
+        public ReactiveCollection<ItemType> Grid => grid;
 
         /// <inheritdoc/>
         public int Rows => rows;
@@ -35,9 +36,8 @@ namespace Com.AFBiyik.MatchRow.GameScene
         public GridPresenter(LevelModel levelModel, Rect rect)
         {
             // Initialize grid
-            grid = levelModel.Grid
-                .Select(i => i.ToItemType())
-                .ToList();
+            grid = new ReactiveCollection<ItemType>(levelModel.Grid
+                .Select(i => i.ToItemType()));
 
             // Get columns and rows
             colums = levelModel.GridWidth;

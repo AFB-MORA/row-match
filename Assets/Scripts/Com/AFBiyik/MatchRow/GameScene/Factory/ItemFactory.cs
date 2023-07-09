@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using Com.AFBiyik.MatchRow.GameScene.Enumeration;
+using Com.AFBiyik.MatchRow.GameScene.View;
 using UnityEngine;
 using Zenject;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.Factory
 {
     /// <summary>
     /// Factory for items.

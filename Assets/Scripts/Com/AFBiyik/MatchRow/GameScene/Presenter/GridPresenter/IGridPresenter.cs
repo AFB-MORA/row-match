@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+using Com.AFBiyik.MatchRow.GameScene.Enumeration;
+using UniRx;
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.GameScene
+namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
     /// <summary>
     /// Contains grid properties and grid methods
@@ -26,7 +27,7 @@ namespace Com.AFBiyik.MatchRow.GameScene
         /// <summary>
         /// Grid items starting from bottom left
         /// </summary>
-        List<ItemType> Grid { get; }
+        ReactiveCollection<ItemType> Grid { get; }
 
         /// <summary>
         /// Converts grid position to world position
