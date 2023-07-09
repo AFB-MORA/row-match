@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.Factory;
+using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.LevelSystem;
 using UnityEngine;
 using Zenject;
@@ -39,6 +40,10 @@ namespace Com.AFBiyik.MatchRow.GameScene
             Container.BindInterfacesTo<ItemFactory>()
                 .AsSingle()
                 .WithArguments(itemPrefabs);
+
+            // ISwipeEvent
+            Container.BindInterfacesTo<SwipeManager>()
+                .AsSingle();
         }
     }
 }
