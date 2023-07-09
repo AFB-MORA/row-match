@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.Factory;
+using Com.AFBiyik.MatchRow.GameScene.Controller;
 using Com.AFBiyik.MatchRow.GameScene.Factory;
 using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
@@ -47,6 +48,11 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
             // ISwipeEvent
             Container.BindInterfacesTo<SwipeManager>()
                 .AsSingle();
+
+            // Game Controller
+            Container.BindInterfacesTo<GameController>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

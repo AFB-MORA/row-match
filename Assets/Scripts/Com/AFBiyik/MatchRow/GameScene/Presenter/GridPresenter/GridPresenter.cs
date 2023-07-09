@@ -13,7 +13,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         // Private Readonly Fields
         private readonly float cellSize;
         private readonly int rows;
-        private readonly int colums;
+        private readonly int columns;
         private readonly ReactiveCollection<ItemType> grid;
         private readonly Vector2 origin;
 
@@ -24,7 +24,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         public int Rows => rows;
 
         /// <inheritdoc/>
-        public int Colums => colums;
+        public int Colums => columns;
 
         /// <inheritdoc/>
         public float CellSize => cellSize;
@@ -40,16 +40,16 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
                 .Select(i => i.ToItemType()));
 
             // Get columns and rows
-            colums = levelModel.GridWidth;
+            columns = levelModel.GridWidth;
             rows = levelModel.GridHeight;
 
             // Calculate cell size
-            float cellWidth = rect.size.x / colums;
+            float cellWidth = rect.size.x / columns;
             float cellHeight = rect.size.y / rows;
             cellSize = Mathf.Min(cellWidth, cellHeight);
 
             // Calculate origin
-            float width = colums * cellSize;
+            float width = columns * cellSize;
             float height = rows * cellSize;
             origin = rect.position - new Vector2(width / 2f, height / 2f);
         }
@@ -61,6 +61,18 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             float y = gridPosition.y * cellSize + origin.y;
 
             return new Vector2(x, y);
+        }
+
+        public int GetItemIndex(Vector2Int gridPosition)
+        {
+            return gridPosition.y * columns + gridPosition.x;
+        }
+
+        public Vector2Int GetItemGridPosition(int index)
+        {
+            int x = index % columns;
+            int y = index / columns;
+            return new Vector2Int(x, y);
         }
     }
 }

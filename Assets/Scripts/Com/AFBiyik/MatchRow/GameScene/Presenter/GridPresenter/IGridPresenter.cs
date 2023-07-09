@@ -35,5 +35,19 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <param name="gridPosition">Grid position (0,0) is bottom left</param>
         /// <returns>World position</returns>
         Vector2 GridPositionToWorldPosition(Vector2Int gridPosition);
+
+        /// <summary>
+        /// Get item index from grid position
+        /// </summary>
+        /// <param name="gridPosition">Grid position</param>
+        /// <returns>Item index</returns>
+        int GetItemIndex(Vector2Int gridPosition);
+
+        /// <summary>
+        /// Get item grid position from item index
+        /// </summary>
+        /// <param name="index">Item index</param>
+        /// <returns>Grid position</returns>
+        Vector2Int GetItemGridPosition(int index);
     }
 }
