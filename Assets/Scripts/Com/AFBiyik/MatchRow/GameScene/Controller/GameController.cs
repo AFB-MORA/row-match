@@ -14,9 +14,11 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
     public class GameController : IDisposable
     {
         // Private Readonly Fields
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
         private readonly IGridPresenter gridPresenter;
         private readonly IGamePresenter gamePresenter;
+
+        // Private Fields
+        private IDisposable swipeDisposable;
 
         /// <summary>
         /// Creates game controller
@@ -32,14 +34,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             this.gamePresenter = gamePresenter;
 
             // Subscribe swipe event
-            swipeEvent.OnSwipe
-                .Subscribe(OnSwipe)
-                .AddTo(disposables);
+            swipeDisposable = swipeEvent.OnSwipe
+                .Subscribe(OnSwipe);
         }
 
         public void Dispose()
         {
-            disposables.Dispose();
+            swipeDisposable?.Dispose();
         }
 
         /// <summary>
@@ -119,8 +120,30 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             CheckRows();
 
             // Check Move Count
+            if (!MakeMove())
+            {
+                // Game Over
+                GameOver();
+            }
 
             // Check Has Moves
+        }
+
+        private void GameOver()
+        {
+            swipeDisposable?.Dispose();
+            swipeDisposable = null;
+            Debug.Log("Game Over");
+        }
+
+        /// <summary>
+        /// Decreases move count.
+        /// </summary>
+        /// <returns>True if has move; otherwise false.</returns>
+        private bool MakeMove()
+        {
+            // Make move
+            return gamePresenter.MakeMove();
         }
 
         /// <summary>

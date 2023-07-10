@@ -49,5 +49,15 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 
             score.Value += scoreToAdd;
         }
+
+        /// <inheritdoc/>
+        public bool MakeMove()
+        {
+            // Decrease move count
+            moveCount.Value--;
+
+            // return has moves
+            return moveCount.Value > 0;
+        }
     }
 }
