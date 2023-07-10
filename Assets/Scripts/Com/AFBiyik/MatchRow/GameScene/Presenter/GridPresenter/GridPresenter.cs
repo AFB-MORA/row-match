@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Util;
@@ -113,6 +114,23 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
                 // Complete item
                 grid[index] = ItemType.Completed;
             }
+        }
+
+        /// <inheritdoc/>
+        public List<ItemType> GetItemsAtRow(int row)
+        {
+            List<ItemType> items = new List<ItemType>();
+
+            // For each column
+            for (int x = 0; x < Colums; x++)
+            {
+                // Get item
+                int index = GetItemIndex(new Vector2Int(x, row));
+                var item = Grid[index];
+                items.Add(item);
+            }
+
+            return items;
         }
     }
 }

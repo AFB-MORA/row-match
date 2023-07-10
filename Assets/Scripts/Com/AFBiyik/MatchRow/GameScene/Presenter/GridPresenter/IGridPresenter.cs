@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using UniRx;
 using UnityEngine;
@@ -62,5 +63,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// </summary>
         /// <param name="row">Row index</param>
         void CompleteRow(int row);
+
+        /// <summary>
+        /// Get all items in the row
+        /// </summary>
+        /// <param name="row">Row index</param>
+        /// <returns>Items at the row</returns>
+        List<ItemType> GetItemsAtRow(int row);
     }
 }
