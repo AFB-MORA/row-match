@@ -204,7 +204,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             gridPresenter.CompleteRow(row);
 
             // Update score
-            gamePresenter.UpdateScore(firstItem);
+            gamePresenter.UpdateScore(firstItem, gridPresenter.Colums);
         }
 
     }

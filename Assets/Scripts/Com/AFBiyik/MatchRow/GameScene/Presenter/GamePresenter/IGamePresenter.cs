@@ -24,7 +24,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// Updates score
         /// </summary>
         /// <param name="itemType">Row item type</param>
-        void UpdateScore(ItemType itemType);
+        /// <param name="columns">Number of columns</param>
+        void UpdateScore(ItemType itemType, int columns);
 
         /// <summary>
         /// Decreases move count.

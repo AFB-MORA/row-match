@@ -34,7 +34,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         }
 
         /// <inheritdoc/>
-        public void UpdateScore(ItemType itemType)
+        public void UpdateScore(ItemType itemType, int columns)
         {
             int scoreToAdd = 0;
             switch (itemType)
@@ -53,7 +53,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
                     break;
             }
 
-            score.Value += scoreToAdd;
+            score.Value += scoreToAdd * columns;
 
             // Check High Score
             if (highScore.Value < score.Value)
