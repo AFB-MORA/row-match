@@ -9,11 +9,16 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
     {
         // Private Fields
         private readonly ReactiveProperty<int> score;
+        private readonly ReactiveProperty<int> highScore;
         private readonly ReactiveProperty<int> moveCount;
 
         // Public Properties
         /// <inheritdoc/>
         public IReadOnlyReactiveProperty<int> Score => score;
+
+        /// <inheritdoc/>
+        public IReadOnlyReactiveProperty<int> HighScore => highScore;
+
         /// <inheritdoc/>
         public IReadOnlyReactiveProperty<int> MoveCount => moveCount;
 
@@ -24,6 +29,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         public GamePresenter(LevelModel levelModel)
         {
             score = new ReactiveProperty<int>(0);
+            highScore = new ReactiveProperty<int>(levelModel.HighScore);
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
         }
 
@@ -48,6 +54,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             }
 
             score.Value += scoreToAdd;
+
+            // Check High Score
+            if (highScore.Value < score.Value)
+            {
+                highScore.Value = score.Value;
+                // TODO Save high score
+            }
         }
 
         /// <inheritdoc/>

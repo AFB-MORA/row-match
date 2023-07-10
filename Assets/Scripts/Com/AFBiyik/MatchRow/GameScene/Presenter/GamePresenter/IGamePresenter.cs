@@ -11,6 +11,11 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         IReadOnlyReactiveProperty<int> Score { get; }
 
         /// <summary>
+        /// Game Score
+        /// </summary>
+        IReadOnlyReactiveProperty<int> HighScore { get; }
+
+        /// <summary>
         /// Move count
         /// </summary>
         IReadOnlyReactiveProperty<int> MoveCount { get; }

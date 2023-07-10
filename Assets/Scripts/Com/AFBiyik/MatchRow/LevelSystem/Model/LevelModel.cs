@@ -7,5 +7,6 @@ namespace Com.AFBiyik.MatchRow.LevelSystem
         public int GridHeight { get; set; }
         public int MoveCount { get; set; }
         public string[] Grid { get; set; }
+        public int HighScore { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// <summary>
         /// Called when move count changes.
         /// </summary>
-        /// <param name="score"></param>
+        /// <param name="moveCount"></param>
         private void OnMoveCount(int moveCount)
         {
             // Set move count
