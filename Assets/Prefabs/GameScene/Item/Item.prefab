@@ -66,7 +66,7 @@ MonoBehaviour:
   itemType: 0
   image: {fileID: 4277463320241225938}
   circleCollider: {fileID: 410780783842179856}
-  completedObject: {fileID: 2145982853122962148}
+  completedObject: {fileID: 7471952045448715370}
 --- !u!1 &5899335579445653920
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 947854153146438089}
-  - component: {fileID: 2145982853122962148}
+  - component: {fileID: 7471952045448715370}
   m_Layer: 0
   m_Name: CompletedImage
   m_TagString: Untagged
@@ -100,7 +100,7 @@ Transform:
   m_Father: {fileID: 5572615217988691058}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2145982853122962148
+--- !u!212 &7471952045448715370
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,12 +141,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: 939116aff5efc4cd78302e23e7b4d678, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31da210d8a1904d18a82f0c260fcd3c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
