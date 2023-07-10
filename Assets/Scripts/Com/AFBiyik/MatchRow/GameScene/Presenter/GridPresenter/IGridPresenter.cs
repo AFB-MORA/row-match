@@ -27,7 +27,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <summary>
         /// Grid items starting from bottom left
         /// </summary>
-        ReactiveCollection<ItemType> Grid { get; }
+        IReadOnlyReactiveCollection<ItemType> Grid { get; }
 
         /// <summary>
         /// Converts grid position to world position
@@ -49,5 +49,18 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <param name="index">Item index</param>
         /// <returns>Grid position</returns>
         Vector2Int GetItemGridPosition(int index);
+
+        /// <summary>
+        /// Swaps grid items.
+        /// </summary>
+        /// <param name="oldIndex"></param>
+        /// <param name="newIndex"></param>
+        void SwapItems(int oldIndex, int newIndex);
+
+        /// <summary>
+        /// Completes row items in the grid.
+        /// </summary>
+        /// <param name="row">Row index</param>
+        void CompleteRow(int row);
     }
 }

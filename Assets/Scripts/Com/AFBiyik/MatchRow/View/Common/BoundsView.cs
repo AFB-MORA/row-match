@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.GameScene.View
+namespace Com.AFBiyik.MatchRow.View
 {
     /// <summary>
     /// Calculates bounds responsively.
@@ -8,14 +8,14 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
     /// Similar with rect transform strech.
     /// </summary>
     [ExecuteAlways]
-    public class GridBoundsView : MonoBehaviour
+    public class BoundsView : MonoBehaviour
     {
         // Serialize Fields
         [SerializeField, Tooltip("Left, Right, Top, Bottom")]
-        private Vector4 padding;
+        protected Vector4 padding;
 
         // Private Fields
-        private Rect? rect;
+        protected Rect? rect;
 
         // Public Properties
         public Rect Rect => rect ??= GetRect();
@@ -24,7 +24,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// Calculates rect with screen aspect.
         /// </summary>
         /// <returns></returns>
-        private Rect GetRect()
+        protected virtual Rect GetRect()
         {
             // Get cam
             Camera cam = Camera.main;
@@ -35,14 +35,14 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             float cameraWidth = aspect * cameraHeight;
 
             // Get position
-            Vector2 position = transform.position;
+            Vector2 position = transform.localPosition;
 
             // Calculate size by camera and padding
             Vector2 size = new Vector2(cameraWidth - padding.x - padding.y,
                 cameraHeight - padding.z - padding.w);
 
             // Calculate offset by posiyion and padding
-            Vector2 offset = position + new Vector2(padding.y / 2f - padding.x / 2f,
+            Vector2 offset = position + new Vector2(padding.x / 2f - padding.y / 2f,
                 padding.w / 2f - padding.z / 2f);
 
             // Return rect
@@ -50,7 +50,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         }
 
 #if UNITY_EDITOR
-        private void Update()
+        protected virtual void Update()
         {
             if (!Application.isPlaying)
             {
@@ -60,7 +60,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             }
         }
 
-        private void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
             // Draw bounds
             Vector2 size2 = Rect.size / 2;

@@ -16,16 +16,20 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         // Private Readonly Fields
         private readonly CompositeDisposable disposables = new CompositeDisposable();
         private readonly IGridPresenter gridPresenter;
+        private readonly IGamePresenter gamePresenter;
 
         /// <summary>
         /// Creates game controller
         /// </summary>
         /// <param name="swipeEvent">Swipe Event</param>
         /// <param name="gridPresenter">Grid Presenter</param>
-        public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter)
+        public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter, IGamePresenter gamePresenter)
         {
             // Set grid presenter
             this.gridPresenter = gridPresenter;
+
+            // Set game presenter
+            this.gamePresenter = gamePresenter;
 
             // Subscribe swipe event
             swipeEvent.OnSwipe
@@ -108,72 +112,76 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
                 return;
             }
 
-            // Move first item
-            gridPresenter.Grid.Move(itemIndex, nextIndex);
-
-            // Get next index
-            int movedNextIndex;
-            // If next index is bigger than old index
-            if (nextIndex > itemIndex)
-            {
-                // List is moved forward
-                movedNextIndex = nextIndex - 1;
-            }
-            else
-            {
-                // List is moved backward
-                movedNextIndex = nextIndex + 1;
-            }
-
-            // Move second item
-            gridPresenter.Grid.Move(movedNextIndex, itemIndex);
+            // Swap grid items
+            gridPresenter.SwapItems(itemIndex, nextIndex);
 
             // Check Rows
             CheckRows();
+
+            // Check Move Count
+
+            // Check Has Moves
         }
 
+        /// <summary>
+        /// Checks grid for completed rows
+        /// </summary>
         private void CheckRows()
         {
+            // For each row
             for (int y = 0; y < gridPresenter.Rows; y++)
             {
+                // Get fist item
                 int firstIndex = gridPresenter.GetItemIndex(new Vector2Int(0, y));
                 var firstItem = gridPresenter.Grid[firstIndex];
 
-                if (firstItem != ItemType.Completed)
+                // If not completed and row is completed
+                if (firstItem != ItemType.Completed && CheckRow(y, firstItem))
                 {
-                    if (CheckRow(y, firstItem))
-                    {
-                        CompleteRow(y, firstItem);
-                    }
+                    // Complete row
+                    CompleteRow(y, firstItem);
                 }
             }
         }
 
+        /// <summary>
+        /// Checks all row has same item as first item.
+        /// </summary>
+        /// <param name="y">Row index</param>
+        /// <param name="firstItem">Fist item in the row</param>
+        /// <returns></returns>
         private bool CheckRow(int y, ItemType firstItem)
         {
+            // For each column
             for (int x = 1; x < gridPresenter.Colums; x++)
             {
+                // Get item
                 int index = gridPresenter.GetItemIndex(new Vector2Int(x, y));
                 var item = gridPresenter.Grid[index];
 
+                // Check item
                 if (item != firstItem)
                 {
                     return false;
                 }
             }
 
+            // All rows same
             return true;
         }
 
-        private void CompleteRow(int y, ItemType firstItem)
+        /// <summary>
+        /// Complete row
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="firstItem"></param>
+        private void CompleteRow(int row, ItemType firstItem)
         {
-            for (int x = 0; x < gridPresenter.Colums; x++)
-            {
-                int index = gridPresenter.GetItemIndex(new Vector2Int(x, y));
-                gridPresenter.Grid[index] = ItemType.Completed;
-            }
+            // Set row completed
+            gridPresenter.CompleteRow(row);
 
-            // TODO score
+            // Update score
+            gamePresenter.UpdateScore(firstItem);
         }
 
     }

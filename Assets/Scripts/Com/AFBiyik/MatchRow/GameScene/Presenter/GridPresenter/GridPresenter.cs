@@ -17,8 +17,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         private readonly ReactiveCollection<ItemType> grid;
         private readonly Vector2 origin;
 
+        // Public properties
         /// <inheritdoc/>
-        public ReactiveCollection<ItemType> Grid => grid;
+        public IReadOnlyReactiveCollection<ItemType> Grid => grid;
 
         /// <inheritdoc/>
         public int Rows => rows;
@@ -75,6 +76,43 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             int x = index % columns;
             int y = index / columns;
             return new Vector2Int(x, y);
+        }
+
+        /// <inheritdoc/>
+        public void SwapItems(int oldIndex, int newIndex)
+        {
+            // Move first item
+            grid.Move(oldIndex, newIndex);
+
+            // Get move index
+            int movedNextIndex;
+            // If new index is bigger than old index
+            if (newIndex > oldIndex)
+            {
+                // List is moved forward
+                movedNextIndex = newIndex - 1;
+            }
+            else
+            {
+                // List is moved backward
+                movedNextIndex = newIndex + 1;
+            }
+
+            // Move second item
+            grid.Move(movedNextIndex, oldIndex);
+        }
+
+        /// <inheritdoc/>
+        public void CompleteRow(int row)
+        {
+            // For each column
+            for (int x = 0; x < Colums; x++)
+            {
+                // Get index
+                int index = GetItemIndex(new Vector2Int(x, row));
+                // Complete item
+                grid[index] = ItemType.Completed;
+            }
         }
     }
 }

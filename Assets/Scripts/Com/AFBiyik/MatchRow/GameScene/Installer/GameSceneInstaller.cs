@@ -6,6 +6,7 @@ using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.GameScene.View;
 using Com.AFBiyik.MatchRow.LevelSystem;
+using Com.AFBiyik.MatchRow.View;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +19,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
     {
         // Serialize Fields
         [SerializeField]
-        private GridBoundsView gridBounds;
+        private BoundsView gridBounds;
         [SerializeField]
         private List<ItemView> itemPrefabs;
 
@@ -35,6 +36,11 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
             Container.BindInterfacesTo<GridPresenter>()
                 .AsSingle()
                 .WithArguments(level, gridBounds.Rect);
+
+            // GridPresenter
+            Container.BindInterfacesTo<GamePresenter>()
+                .AsSingle()
+                .WithArguments(level);
 
             // GridBackgroundCell Factory
             Container.BindInterfacesTo<GenericPrefabFactory<GridBackgroundCell>>()
