@@ -22,9 +22,11 @@ static class UIPrefabStageWatcher
 
         if (prefab.GetComponent<RectTransform>() != null)
         {
+            var scale = prefab.transform.localScale;
             var rootObjects = stage.scene.GetRootGameObjects();
             var parent = stage.scene.GetRootGameObjects().FirstOrDefault(go => go.name == "UIParent (Environment)");
             prefab.transform.SetParent(parent.transform);
+            prefab.transform.localScale = scale;
         }
     }
 }
