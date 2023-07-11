@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.Global.View
+namespace Com.AFBiyik.UIComponents
 {
     /// <summary>
     /// Stretch view for rect transform. Fills the screen.

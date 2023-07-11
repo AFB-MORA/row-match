@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace Com.AFBiyik.MatchRow.Global.View
+namespace Com.AFBiyik.UIComponents
 {
     /// <summary>
     /// Simple button
