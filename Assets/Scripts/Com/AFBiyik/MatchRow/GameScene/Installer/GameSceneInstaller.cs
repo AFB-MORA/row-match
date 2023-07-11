@@ -6,7 +6,7 @@ using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.GameScene.View;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
-using Com.AFBiyik.MatchRow.Global.View;
+using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using Zenject;
 
