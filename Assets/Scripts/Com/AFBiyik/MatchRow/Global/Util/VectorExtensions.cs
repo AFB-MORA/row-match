@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.Util
+namespace Com.AFBiyik.MatchRow.Global.Util
 {
     public static class VectorExtensions
     {

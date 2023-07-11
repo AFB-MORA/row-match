@@ -1,6 +1,6 @@
 
 using System;
-using Com.AFBiyik.MatchRow.Util;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;

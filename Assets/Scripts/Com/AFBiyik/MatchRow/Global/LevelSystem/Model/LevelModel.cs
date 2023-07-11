@@ -1,4 +1,4 @@
-namespace Com.AFBiyik.MatchRow.LevelSystem
+namespace Com.AFBiyik.MatchRow.Global.LevelSystem
 {
     public class LevelModel
     {

@@ -1,7 +1,8 @@
 using UnityEngine;
 using Zenject;
 
-namespace Com.AFBiyik.MatchRow.Factory {
+namespace Com.AFBiyik.Factory
+{
     /// <summary>
     /// Generic factory for prefabs.
     ///
@@ -9,13 +10,10 @@ namespace Com.AFBiyik.MatchRow.Factory {
     /// <h3>Installer:</h3>
     ///
     /// <code>
-    /// using Morautils.Factory.Prefab;
-    /// using Zenject;
-    /// 
     /// public class ExampleInstaller : MonoInstaller {
     ///     public override void InstallBindings() {
-    ///         Container.BindInterfacesTo&lt;GenericPrefabFactory&lt;Foo&gt;&gt;()
-    ///         .AsSingle();
+    ///         Container.BindInterfacesTo&lt;PrefabFactory&gt;()
+    ///             .AsSingle();
     ///     }
     /// }
     /// </code>
@@ -24,13 +22,13 @@ namespace Com.AFBiyik.MatchRow.Factory {
     ///
     /// <code>
     /// [Inject]
-    /// private IFactory&lt;Foo, Foo&gt; fooFactory;
+    /// private IFactory&lt;GameObject, GameObject&gt; prefabFactory;
     /// 
     /// [SerializeField]
-    /// private Foo prefab
+    /// private GameObject prefab
     /// 
     /// public void Spawn() {
-    ///     Foo instance = fooFactory.Create(prefab);
+    ///     GameObject instance = prefabFactory.Create(prefab);
     /// }
     /// </code>
     /// 
@@ -38,23 +36,23 @@ namespace Com.AFBiyik.MatchRow.Factory {
     /// 
     /// <code>
     /// [Inject]
-    /// private IFactory&lt;Foo, Transform, Foo&gt; fooFactoryWithParent;
+    /// private IFactory&lt;GameObject, Transform, GameObject&gt; prefabFactoryWithParent;
     /// 
     /// [SerializeField]
     /// private Transform parent
     /// [SerializeField]
-    /// private Foo prefab
+    /// private GameObject prefab
     /// 
     /// public void Spawn() {
-    ///     Foo instance = fooFactoryWithParent.Create(prefab, parent);
+    ///     GameObject instance = prefabFactoryWithParent.Create(prefab, parent);
     /// }
     /// </code>
     /// 
     /// </example>
     ///
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class GenericPrefabFactory<T> : IFactory<T, T>, IFactory<T, Transform, T> where T : Behaviour {
+    public class PrefabFactory : IFactory<GameObject, GameObject>, IFactory<GameObject, Transform, GameObject>
+    {
         // Dependencies
         /// <summary>
         /// 
@@ -67,9 +65,9 @@ namespace Com.AFBiyik.MatchRow.Factory {
         /// </summary>
         /// <param name="prefab"></param>
         /// <returns></returns>
-        public virtual T Create(T prefab) {
-            T view = container.InstantiatePrefabForComponent<T>(prefab.gameObject);
-            return view;
+        public virtual GameObject Create(GameObject prefab)
+        {
+            return container.InstantiatePrefab(prefab);
         }
 
         /// <summary>
@@ -78,9 +76,9 @@ namespace Com.AFBiyik.MatchRow.Factory {
         /// <param name="prefab"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public virtual T Create(T prefab, Transform parent) {
-            T view = container.InstantiatePrefabForComponent<T>(prefab.gameObject, parent);
-            return view;
+        public virtual GameObject Create(GameObject prefab, Transform parent)
+        {
+            return container.InstantiatePrefab(prefab, parent);
         }
     }
 }
