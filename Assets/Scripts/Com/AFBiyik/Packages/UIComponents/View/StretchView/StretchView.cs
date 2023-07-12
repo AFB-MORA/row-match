@@ -56,7 +56,13 @@ namespace Com.AFBiyik.UIComponents
             dt.Clear();
 
             // Drive the transform
-            dt.Add(this, rt, DrivenTransformProperties.All);
+            dt.Add(this, rt, DrivenTransformProperties.AnchoredPositionX |
+                DrivenTransformProperties.AnchoredPositionY |
+                DrivenTransformProperties.Rotation |
+                DrivenTransformProperties.Scale |
+                DrivenTransformProperties.Anchors |
+                DrivenTransformProperties.Pivot |
+                DrivenTransformProperties.SizeDelta);
         }
     }
 }
