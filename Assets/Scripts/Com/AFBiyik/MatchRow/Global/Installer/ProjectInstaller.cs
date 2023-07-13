@@ -1,5 +1,6 @@
 using Com.AFBiyik.AssetSystem;
 using Com.AFBiyik.Factory;
+using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using Com.AFBiyik.PopupSystem;
 using Zenject;
 
@@ -9,22 +10,16 @@ namespace Com.AFBiyik.MatchRow.Global.Installer
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<AssetLoader>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.BindInterfacesTo<AtlasLoader>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.BindInterfacesTo<AssetManager>()
-                .AsSingle()
-                .NonLazy();
+            AssetSystemInstaller.Install(Container, null);
 
             Container.BindInterfacesTo<PrefabFactory>()
                 .AsSingle();
 
             Container.BindInterfacesTo<PopupController>()
+                .AsSingle()
+                .NonLazy();
+
+            Container.BindInterfacesTo<LevelManager>()
                 .AsSingle()
                 .NonLazy();
         }

@@ -1,0 +1,17 @@
+{
+    "name": "Com.AFBiyik.MatchRow.Global.LevelSystem",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "Com.AFBiyik.AssetSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

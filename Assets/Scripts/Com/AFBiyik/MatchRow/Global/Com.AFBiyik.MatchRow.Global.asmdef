@@ -1,0 +1,23 @@
+{
+    "name": "Com.AFBiyik.MatchRow.Global",
+    "rootNamespace": "",
+    "references": [
+        "Com.AFBiyik.AssetSystem",
+        "Com.AFBiyik.Factory",
+        "Com.AFBiyik.PopupSystem",
+        "Com.AFBiyik.UIComponents",
+        "Zenject",
+        "Unity.ResourceManager",
+        "Com.AFBiyik.MatchRow.Global.LevelSystem",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

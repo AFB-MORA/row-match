@@ -20,7 +20,7 @@ namespace Com.AFBiyik.AssetSystem
     ///     // TransformFuntion: Addressable id transform function
     ///     // Use Cases: Change remote url depends on platform (i.e. iOS / Adnroid).
     ///     // Change remote url depends on environment (i.e. Production / Test)
-    ///     AssetSystemInstaller.Install(TransformFuntion);
+    ///     AssetSystemInstaller.Install(Container, TransformFuntion);
     /// }
     /// 
     /// private string TransformFuntion(IResourceLocation location) {
@@ -35,7 +35,7 @@ namespace Com.AFBiyik.AssetSystem
     /// Or
     /// <code>
     /// public override void InstallBindings() {
-    ///     AssetSystemInstaller.Install(null);
+    ///     AssetSystemInstaller.Install(Container, null);
     /// }
     /// </code>
     /// </example>

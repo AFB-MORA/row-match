@@ -1,0 +1,19 @@
+{
+    "name": "Com.AFBiyik.PopupSystem",
+    "rootNamespace": "",
+    "references": [
+        "Zenject",
+        "Com.AFBiyik.AssetSystem",
+        "UniRx",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
