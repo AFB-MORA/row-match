@@ -9,17 +9,7 @@ namespace Com.AFBiyik.MatchRow.Global.Installer
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<AssetLoader>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.BindInterfacesTo<AtlasLoader>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.BindInterfacesTo<AssetManager>()
-                .AsSingle()
-                .NonLazy();
+            AssetSystemInstaller.Install(Container, null);
 
             Container.BindInterfacesTo<PrefabFactory>()
                 .AsSingle();
