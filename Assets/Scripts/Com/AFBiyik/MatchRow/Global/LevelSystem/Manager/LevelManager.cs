@@ -42,15 +42,19 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
                 return loadedLevels[level];
             }
 
-            ///
+            // Check level number
             if (level < 1 || level > LevelConstants.NUMBER_OF_LEVELS)
             {
                 throw new ArgumentOutOfRangeException($"Level Number must be between 1 and {LevelConstants.NUMBER_OF_LEVELS} (inclusive).");
             }
 
+            // Load level
             var levelModel = await levelLoader.LoadLevel(level);
+
+            // Set high score
             levelModel.HighScore = GetHighScore(level);
 
+            // Update cache
             loadedLevels[level] = levelModel;
 
             return levelModel;
