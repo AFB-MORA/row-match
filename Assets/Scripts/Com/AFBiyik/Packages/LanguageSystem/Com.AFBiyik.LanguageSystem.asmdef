@@ -1,0 +1,19 @@
+{
+    "name": "Com.AFBiyik.LanguageSystem",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "Com.AFBiyik.AssetSystem",
+        "UniRx",
+        "Com.AFBiyik.JsonHelper"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

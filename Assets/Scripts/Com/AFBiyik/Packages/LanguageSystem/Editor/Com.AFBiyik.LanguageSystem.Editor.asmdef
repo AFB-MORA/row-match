@@ -1,0 +1,22 @@
+{
+    "name": "Com.AFBiyik.LanguageSystem.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Com.AFBiyik.AssetSystem",
+        "Com.AFBiyik.AssetSystem.Editor",
+        "Com.AFBiyik.LanguageSystem",
+        "Com.AFBiyik.JsonHelper",
+        "Unity.Addressables.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,23 @@
+{
+    "name": "Com.AFBiyik.LanguageSystem.TMP",
+    "rootNamespace": "",
+    "references": [
+        "Com.AFBiyik.LanguageSystem",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "",
+            "define": "LANGUAGE_SYSTEM_TMP"
+        }
+    ],
+    "noEngineReferences": false
+}

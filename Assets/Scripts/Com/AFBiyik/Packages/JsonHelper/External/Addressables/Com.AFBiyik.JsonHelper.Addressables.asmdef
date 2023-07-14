@@ -1,0 +1,19 @@
+{
+    "name": "Com.AFBiyik.JsonHelper.Addressables",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "Com.AFBiyik.AssetSystem",
+        "Zenject",
+        "Com.AFBiyik.JsonHelper"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
