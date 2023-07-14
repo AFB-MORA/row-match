@@ -17,6 +17,8 @@ namespace Com.AFBiyik.UIComponents.Editor
 
             // Create recycle view
             var recycleViewGo = new GameObject("RecycleView");
+            var recycleViewRenderer = recycleViewGo.AddComponent<SpriteRenderer>();
+            recycleViewRenderer.enabled = false;
             recycleViewGo.layer = LayerMask.NameToLayer("UI");
             var recycleViewRT = recycleViewGo.AddComponent<RectTransform>();
             var recycleView = recycleViewGo.AddComponent<RecycleView>();

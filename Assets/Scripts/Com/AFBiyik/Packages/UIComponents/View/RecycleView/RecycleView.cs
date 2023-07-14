@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -39,7 +37,6 @@ namespace Com.AFBiyik.UIComponents
         // Protected Fields
         protected RectTransform rectTransform;
         protected BoxCollider2D boxCollider;
-        protected SpriteRenderer spriteRenderer;
         protected IRecycleViewDataSource dataSource;
 
         // Private Fields
@@ -57,7 +54,6 @@ namespace Com.AFBiyik.UIComponents
         private DateTime pevTimeStamp;
         private float inertiaSpeed;
         private int inertiaDirection;
-
 
         // Protected Properties
         protected RectTransform RectTransform
@@ -86,19 +82,6 @@ namespace Com.AFBiyik.UIComponents
             }
         }
 
-        protected SpriteRenderer SpriteRenderer
-        {
-            get
-            {
-                if (spriteRenderer == null)
-                {
-                    spriteRenderer = GetComponent<SpriteRenderer>();
-                }
-
-                return spriteRenderer;
-            }
-        }
-
         /// <summary>
         /// Called first
         /// </summary>
@@ -122,11 +105,12 @@ namespace Com.AFBiyik.UIComponents
         /// </summary>
         private void SetBounds()
         {
+            // Get size
+            var size = RectTransform.rect.size;
+
             // Set collideer
-            BoxCollider.size = RectTransform.sizeDelta;
+            BoxCollider.size = size;
             BoxCollider.offset = new Vector2(0, 0);
-            // Set sprite rendere
-            SpriteRenderer.size = RectTransform.sizeDelta;
         }
 
         /// <summary>
@@ -155,55 +139,114 @@ namespace Com.AFBiyik.UIComponents
         /// </summary>
         protected virtual void CreateItems()
         {
+            // Destroy content
             foreach (Transform child in content)
             {
                 Destroy(child.gameObject);
             }
 
+            // Get height
             float height = RectTransform.rect.height;
+            // Get item height
             float itemHeight = dataSource.ItemHeight;
 
+            // Calculate visible item count
             visibleItemCount = Mathf.CeilToInt(height / (itemHeight + spacing)) + 1;
+            // Set first item index
             firstItemIndex = -1;
+            // Set cells
             cells = new List<GameObject>();
 
+            // For number of visible items
             for (int i = 0; i < visibleItemCount; i++)
             {
+                // Create view
                 var view = dataSource.CreateView();
                 cells.Add(view);
+
+                // Set parent
                 RectTransform rt = (RectTransform)view.transform;
                 rt.SetParent(content, false);
-                float position = i * itemHeight + padding.x + (i == 0 ? 0 : i - 1 * spacing);
-                rt.anchoredPosition = new Vector2(0, -position);
             }
 
-            CheckItems();
+            CheckItemPositions();
         }
 
         /// <summary>
         /// Checks and updates items when scroll
         /// </summary>
-        protected virtual void CheckItems()
+        protected virtual void CheckItemPositions()
         {
+            // Get current pos
             float contentPos = content.anchoredPosition.y;
 
-            int itemIndex = Mathf.FloorToInt((contentPos - padding.y) / (dataSource.ItemHeight + spacing));
-
-            if (firstItemIndex != itemIndex)
+            // Check bounds
+            if (contentPos < 0 || content.rect.height - contentPos < RectTransform.rect.height)
             {
-                float itemHeight = dataSource.ItemHeight;
-                firstItemIndex = itemIndex;
+                return;
+            }
 
-                for (int i = 0; i < visibleItemCount; i++)
-                {
-                    var view = cells[i];
-                    RectTransform rt = (RectTransform)view.transform;
+            // Get item index
+            int itemIndex = Mathf.Max(0,
+                Mathf.FloorToInt((contentPos - padding.x) / (dataSource.ItemHeight + spacing)));
 
-                    int index = firstItemIndex + i;
-                    dataSource.SetView(view, index);
-                    float position = index * itemHeight + padding.x + (i == 0 ? 0 : i - 1 * spacing);
-                    rt.anchoredPosition = new Vector2(0, -position);
-                }
+            // Check item index
+            if (firstItemIndex == itemIndex)
+            {
+                return;
+            }
+
+            // Update item index
+            firstItemIndex = itemIndex;
+
+            // Get item height
+            float itemHeight = dataSource.ItemHeight;
+
+            // For each visible items
+            for (int i = 0; i < visibleItemCount; i++)
+            {
+                SetItemPosition(itemHeight, i);
+            }
+        }
+
+        /// <summary>
+        /// Sets position of the item
+        /// </summary>
+        /// <param name="itemHeight"><see cref="dataSource.ItemHeight"/></param>
+        /// <param name="i">Cell index</param>
+        private void SetItemPosition(float itemHeight, int i)
+        {
+            // Get view
+            var view = cells[i];
+            // Get index
+            int index = firstItemIndex + i;
+
+            // Check index is valid
+            if (index < dataSource.NumberOfItems)
+            {
+                view.name = $"index ({index})";
+                // Activate view
+                view.SetActive(true);
+
+                // Get rect transform
+                RectTransform rt = (RectTransform)view.transform;
+
+                // Update data
+                dataSource.SetView(view, index);
+
+                // Set position
+                // height + padding + spacing
+                float position = index * itemHeight +
+                    padding.x +
+                    (index == 0 ? 0 : index * spacing);
+
+                // Set position
+                rt.anchoredPosition = new Vector2(0, -position);
+            }
+            else
+            {
+                // Deactivate view
+                view.SetActive(false);
             }
         }
 
@@ -264,7 +307,7 @@ namespace Com.AFBiyik.UIComponents
             // Update time
             pevTimeStamp = DateTime.Now;
 
-            CheckItems();
+            CheckItemPositions();
 
         }
 
@@ -307,10 +350,12 @@ namespace Com.AFBiyik.UIComponents
         /// </summary>
         protected virtual void Update()
         {
+#if UNITY_EDITOR
             if (!Application.isPlaying)
             {
                 return;
             }
+#endif
 
             CheckLimit();
 
@@ -370,6 +415,8 @@ namespace Com.AFBiyik.UIComponents
                 inertiaSpeed *= Mathf.Pow(decelerationRate, Time.deltaTime);
                 // Set position
                 content.anchoredPosition += new Vector2(0, inertiaDirection * inertiaSpeed * Time.deltaTime);
+
+                CheckItemPositions();
             }
         }
 
@@ -428,7 +475,7 @@ namespace Com.AFBiyik.UIComponents
                 {
                     // Stop spring
                     springDirection = 0;
-                    content.anchoredPosition = new Vector2(content.anchoredPosition.x, 0);
+                    content.anchoredPosition = new Vector2(content.anchoredPosition.x, content.rect.height - RectTransform.rect.height);
                 }
             }
         }
