@@ -82,6 +82,12 @@ namespace Com.AFBiyik.UIComponents
             }
         }
 
+        // Public Properties
+        /// <summary>
+        /// Content transform of the recycle view
+        /// </summary>
+        public RectTransform Content => content;
+
         /// <summary>
         /// Called first
         /// </summary>

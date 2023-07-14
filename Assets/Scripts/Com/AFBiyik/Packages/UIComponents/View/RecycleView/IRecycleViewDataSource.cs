@@ -28,7 +28,6 @@ namespace Com.AFBiyik.UIComponents
         /// </summary>
         /// <param name="view">View to update</param>
         /// <param name="index">Data index</param>
-        /// <returns></returns>
-        GameObject SetView(GameObject view, int index);
+        void SetView(GameObject view, int index);
     }
 }

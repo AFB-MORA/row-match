@@ -4,8 +4,10 @@ using UnityEngine;
 namespace Com.AFBiyik.UIComponents
 {
     [CustomPropertyDrawer(typeof(ChangeableButtonSprite))]
-    public class ChangeableButtonSpriteEditor : PropertyDrawer {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+    public class ChangeableButtonSpriteEditor : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
             base.OnGUI(position, property, label);
 
             // Draw label
@@ -36,7 +38,8 @@ namespace Com.AFBiyik.UIComponents
             EditorGUI.EndProperty();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
             return EditorGUIUtility.singleLineHeight * 6;
         }
     }

@@ -17,6 +17,7 @@ namespace Com.AFBiyik.UIComponents
             EditorGUILayout.PropertyField(serializedObject.FindProperty("pressedColor"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("selectedColor"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("disabledColor"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("onClick"));
 
             serializedObject.ApplyModifiedProperties();
         }
