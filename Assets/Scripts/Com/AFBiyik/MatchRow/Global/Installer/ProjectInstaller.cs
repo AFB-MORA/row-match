@@ -1,5 +1,6 @@
 using Com.AFBiyik.AssetSystem;
 using Com.AFBiyik.Factory;
+using Com.AFBiyik.LanguageSystem;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using Com.AFBiyik.PopupSystem;
 using Zenject;
@@ -10,18 +11,43 @@ namespace Com.AFBiyik.MatchRow.Global.Installer
     {
         public override void InstallBindings()
         {
-            AssetSystemInstaller.Install(Container, null);
+            BindAssetSystem();
+            BindFactories();
+            BindPopupSystem();
+            BindLevelSystem();
+            BinLanguageSystem();
+        }
 
-            Container.BindInterfacesTo<PrefabFactory>()
-                .AsSingle();
-
-            Container.BindInterfacesTo<PopupController>()
+        private void BinLanguageSystem()
+        {
+            Container.BindInterfacesTo<LanguageController>()
                 .AsSingle()
                 .NonLazy();
+        }
 
+        private void BindLevelSystem()
+        {
             Container.BindInterfacesTo<LevelManager>()
                 .AsSingle()
                 .NonLazy();
+        }
+
+        private void BindPopupSystem()
+        {
+            Container.BindInterfacesTo<PopupController>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindFactories()
+        {
+            Container.BindInterfacesTo<PrefabFactory>()
+                .AsSingle();
+        }
+
+        private void BindAssetSystem()
+        {
+            AssetSystemInstaller.Install(Container, null);
         }
     }
 }
