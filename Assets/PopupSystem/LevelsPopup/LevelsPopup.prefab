@@ -32,10 +32,10 @@ RectTransform:
   m_Father: {fileID: 4119152778204205955}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 7.381974, y: 9.599999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4087125694166010201
 GameObject:
@@ -177,8 +177,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6, y: 12}
+  m_AnchoredPosition: {x: 0, y: -0.7059}
+  m_SizeDelta: {x: 5.5668, y: 6.3964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &4959131434243330509
 SpriteRenderer:
@@ -256,7 +256,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 12}
+  m_Size: {x: 5.5668, y: 6.3964}
   m_EdgeRadius: 0
 --- !u!114 &2878190067801591252
 MonoBehaviour:
@@ -271,8 +271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 3222508998213670191}
-  spacing: 1
-  padding: {x: 1, y: 1}
+  spacing: 0.2
+  padding: {x: 0.3, y: 0.3}
   bounceSpeed: 15
   decelerationRate: 0.135
   scrollLimit: 2

@@ -9,7 +9,9 @@
         "Zenject",
         "Unity.ResourceManager",
         "Com.AFBiyik.MatchRow.Global.LevelSystem",
-        "UniTask"
+        "UniTask",
+        "Unity.TextMeshPro",
+        "Com.AFBiyik.LanguageSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
