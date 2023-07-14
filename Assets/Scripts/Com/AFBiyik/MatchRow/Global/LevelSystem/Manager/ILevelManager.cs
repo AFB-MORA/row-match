@@ -18,6 +18,7 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
         /// <param name="level">Level number</param>
         /// <returns>Level model</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">If level is not between 1 and max number of levels (inclusive). </exception>
+        /// <exception cref="System.IO.FileNotFoundException">If file not found</exception>
         UniTask<LevelModel> GetLevel(int level);
 
         /// <summary>

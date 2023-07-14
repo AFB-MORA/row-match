@@ -8,5 +8,6 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
         public int MoveCount { get; set; }
         public string[] Grid { get; set; }
         public int HighScore { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

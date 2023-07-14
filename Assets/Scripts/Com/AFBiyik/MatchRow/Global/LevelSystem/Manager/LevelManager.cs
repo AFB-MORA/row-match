@@ -53,6 +53,7 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
 
             // Set high score
             levelModel.HighScore = GetHighScore(level);
+            levelModel.IsLocked = IsLevelLocked(level);
 
             // Update cache
             loadedLevels[level] = levelModel;
@@ -77,6 +78,16 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
             PlayerPrefs.SetInt($"LevelHighScore_{level}", score);
             // Update cache
             loadedLevels[level].HighScore = score;
+        }
+
+        private bool IsLevelLocked(int level)
+        {
+            if (level == 1)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
