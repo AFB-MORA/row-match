@@ -28,7 +28,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
         {
             // Level Model
             Container.Bind<LevelModel>()
-                .FromMethod(() => Container.Resolve<IProjectManager>().CurrentLevel)
+                .FromMethod(GetLevelModel)
                 .AsSingle();
 
             // GridPresenter
@@ -57,6 +57,29 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
             Container.BindInterfacesTo<GameController>()
                 .AsSingle()
                 .NonLazy();
+        }
+
+        private LevelModel GetLevelModel()
+        {
+            var levelModel = Container.Resolve<IProjectManager>().CurrentLevel;
+
+#if UNITY_EDITOR
+            if (levelModel == null)
+            {
+                _ = Container.Resolve<ILevelManager>().GetLevel(1);
+                levelModel = new LevelModel();
+                levelModel.GridWidth = 5;
+                levelModel.GridHeight = 7;
+                levelModel.LevelNumber = 1;
+                levelModel.MoveCount = 40;
+                levelModel.Grid = new string[] { "b", "b", "y", "b", "b", "g", "y", "g", "r", "b", "y", "g", "r", "g", "g", "b", "b", "g", "b", "y", "r", "r", "g", "g", "y", "g", "g", "y", "y", "b", "y", "b", "b", "y", "b" };
+                levelModel.HighScore = 0;
+                levelModel.IsLocked = false;
+            }
+#endif
+
+            return levelModel;
+
         }
     }
 }

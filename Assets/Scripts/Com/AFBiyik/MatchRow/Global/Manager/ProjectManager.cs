@@ -16,12 +16,6 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         /// </summary>
         public ProjectManager(ILevelManager levelManager)
         {
-            SetCurrentLevel(levelManager);
-        }
-
-        private async void SetCurrentLevel(ILevelManager levelManager)
-        {
-            CurrentLevel = await levelManager.GetLevel(1);
         }
 
         /// <inheritdoc/>

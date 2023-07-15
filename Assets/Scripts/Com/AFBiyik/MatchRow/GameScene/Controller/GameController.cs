@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
@@ -337,7 +336,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
                     if (minMove <= gamePresenter.MoveCount.Value)
                     {
                         return true;
-                    } 
+                    }
 
                 }
             }
@@ -394,7 +393,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
                 return true;
             }
             // right
-            else if(x + 1 < columns && y != notY && GetClosestItemRecursive(subGrid, visited, target, x + 1, y, notY, rows, columns, out count))
+            else if (x + 1 < columns && y != notY && GetClosestItemRecursive(subGrid, visited, target, x + 1, y, notY, rows, columns, out count))
             {
                 count++;
                 return true;
