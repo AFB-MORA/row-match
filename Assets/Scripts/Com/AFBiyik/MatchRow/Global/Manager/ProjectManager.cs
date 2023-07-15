@@ -14,9 +14,8 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         /// <summary>
         /// Creates project manager.
         /// </summary>
-        public ProjectManager()
+        public ProjectManager(ILevelManager levelManager)
         {
-
         }
 
         /// <inheritdoc/>

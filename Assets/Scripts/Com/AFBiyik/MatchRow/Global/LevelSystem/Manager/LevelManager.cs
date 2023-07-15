@@ -80,14 +80,22 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
             loadedLevels[level].HighScore = score;
         }
 
+        /// <summary>
+        /// Check is level locked or not
+        /// </summary>
+        /// <param name="level">Level number</param>
+        /// <returns>True if level is locked; otherwise false.</returns>
         private bool IsLevelLocked(int level)
         {
+            // If first level
             if (level == 1)
             {
                 return false;
             }
 
-            return true;
+            // Get previous level high score
+            int prevHighScore = GetHighScore(level - 1);
+            return prevHighScore == 0;
         }
     }
 }
