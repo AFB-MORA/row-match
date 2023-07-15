@@ -1,4 +1,4 @@
-namespace Com.AFBiyik.MatchRow.LevelSystem
+namespace Com.AFBiyik.MatchRow.Global.LevelSystem
 {
     public class LevelModel
     {
@@ -8,5 +8,6 @@ namespace Com.AFBiyik.MatchRow.LevelSystem
         public int MoveCount { get; set; }
         public string[] Grid { get; set; }
         public int HighScore { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

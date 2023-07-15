@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Util;
-using Com.AFBiyik.MatchRow.LevelSystem;
+using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using UniRx;
 using UnityEngine;
 

@@ -1,0 +1,26 @@
+{
+    "name": "Com.AFBiyik.MatchRow.GameScene",
+    "rootNamespace": "",
+    "references": [
+        "UniRx",
+        "Unity.InputSystem",
+        "UniTask",
+        "Zenject",
+        "Com.AFBiyik.Factory",
+        "Unity.TextMeshPro",
+        "Com.AFBiyik.UIComponents",
+        "Com.AFBiyik.MatchRow.Global.LevelSystem",
+        "Com.AFBiyik.MatchRow.Global",
+        "DOTween.Modules",
+        "UniTask.DOTween"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
