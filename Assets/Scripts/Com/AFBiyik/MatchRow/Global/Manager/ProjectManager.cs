@@ -1,5 +1,7 @@
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
+using Com.AFBiyik.MatchRow.Global.Popup;
 using Com.AFBiyik.MatchRow.Global.Util;
+using Com.AFBiyik.PopupSystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
@@ -8,14 +10,18 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
     /// <inheritdoc/>
     public class ProjectManager : IProjectManager
     {
+        // Private Readonly Properties
+        private readonly IPopupController popupController;
+
         /// <inheritdoc/>
         public LevelModel CurrentLevel { get; private set; }
 
         /// <summary>
         /// Creates project manager.
         /// </summary>
-        public ProjectManager(ILevelManager levelManager)
+        public ProjectManager(IPopupController popupController)
         {
+            this.popupController = popupController;
         }
 
         /// <inheritdoc/>
@@ -23,6 +29,14 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         {
             CurrentLevel = levelModel;
             OpenScene(SceneConstants.GAME_SCENE);
+        }
+
+        /// <inheritdoc/>
+        public async void OpenMainMenu()
+        {
+            OpenScene(SceneConstants.MAIN_SCENE);
+            await UniTask.Delay(50);
+            popupController.Open(PopupConstants.LEVELS_POPUP);
         }
 
         /// <summary>
@@ -33,5 +47,6 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         {
             await SceneManager.LoadSceneAsync(scene);
         }
+
     }
 }

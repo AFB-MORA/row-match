@@ -17,5 +17,10 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         /// </summary>
         /// <param name="levelModel">Current level model</param>
         void PlayLevel(LevelModel levelModel);
+
+        /// <summary>
+        /// Opens main scene
+        /// </summary>
+        void OpenMainMenu();
     }
 }

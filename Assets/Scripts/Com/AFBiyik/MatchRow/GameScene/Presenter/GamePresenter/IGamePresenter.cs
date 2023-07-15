@@ -21,6 +21,11 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         IReadOnlyReactiveProperty<int> MoveCount { get; }
 
         /// <summary>
+        /// True if high score changed; otherwise false
+        /// </summary>
+        bool IsHighScore { get; }
+
+        /// <summary>
         /// Updates score
         /// </summary>
         /// <param name="itemType">Row item type</param>
