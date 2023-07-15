@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.GameScene.View;
+using Com.AFBiyik.MatchRow.Global.Popup;
+using Com.AFBiyik.PopupSystem;
 using UniRx;
 using UnityEngine;
 
@@ -18,6 +21,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         // Private Readonly Fields
         private readonly IGridPresenter gridPresenter;
         private readonly IGamePresenter gamePresenter;
+        private readonly IPopupController popupController;
 
         // Private Fields
         private IDisposable swipeDisposable;
@@ -27,13 +31,16 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         /// </summary>
         /// <param name="swipeEvent">Swipe Event</param>
         /// <param name="gridPresenter">Grid Presenter</param>
-        public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter, IGamePresenter gamePresenter)
+        public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter, IGamePresenter gamePresenter, IPopupController popupController)
         {
             // Set grid presenter
             this.gridPresenter = gridPresenter;
 
             // Set game presenter
             this.gamePresenter = gamePresenter;
+
+            // Set popup controller
+            this.popupController = popupController;
 
             // Subscribe swipe event
             swipeDisposable = swipeEvent.OnSwipe
@@ -144,7 +151,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         {
             swipeDisposable?.Dispose();
             swipeDisposable = null;
-            Debug.Log("Game Over");
+
+            // Open game over popup
+            Hashtable args = new Hashtable();
+            args["isHighScore"] = gamePresenter.IsHighScore;
+            args["highScore"] = gamePresenter.Score.Value;
+            args["score"] = gamePresenter.HighScore.Value;
+            popupController.Open(PopupConstants.GAME_OVER_POPUP, args);
         }
 
         /// <summary>

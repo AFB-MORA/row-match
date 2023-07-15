@@ -25,6 +25,10 @@ MonoBehaviour:
     m_Address: LevelsPopup
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 72ddd7215b2a8442389b43e769c0a8d8
+    m_Address: GameOverPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ac00afe463414278b33dfdfcb8b8a97, type: 2}
   m_SchemaSet:

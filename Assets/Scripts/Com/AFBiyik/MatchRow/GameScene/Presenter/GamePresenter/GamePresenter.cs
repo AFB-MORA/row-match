@@ -24,6 +24,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <inheritdoc/>
         public IReadOnlyReactiveProperty<int> MoveCount => moveCount;
 
+        /// <inheritdoc/>
+        public bool IsHighScore { get; private set; }
+
         /// <summary>
         /// Creates grid presenter with level model
         /// </summary>
@@ -35,6 +38,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             score = new ReactiveProperty<int>(0);
             highScore = new ReactiveProperty<int>(levelModel.HighScore);
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
+            IsHighScore = false;
         }
 
         /// <inheritdoc/>
@@ -62,6 +66,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             // Check High Score
             if (highScore.Value < score.Value)
             {
+                IsHighScore = true;
                 highScore.Value = score.Value;
                 levelManager.SetHighScore(levelModel.LevelNumber, highScore.Value);
             }

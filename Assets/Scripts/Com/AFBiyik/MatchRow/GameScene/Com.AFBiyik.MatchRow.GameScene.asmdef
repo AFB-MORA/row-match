@@ -12,7 +12,8 @@
         "Com.AFBiyik.MatchRow.Global.LevelSystem",
         "Com.AFBiyik.MatchRow.Global",
         "DOTween.Modules",
-        "UniTask.DOTween"
+        "UniTask.DOTween",
+        "Com.AFBiyik.PopupSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
