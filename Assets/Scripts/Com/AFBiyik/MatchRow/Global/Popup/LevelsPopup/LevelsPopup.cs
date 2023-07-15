@@ -41,7 +41,7 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         {
             base.OnOpened(args);
             // Reset content position
-            recycleView.Content.anchoredPosition = Vector2.zero;
+            recycleView.SetContentPosition(Vector2.zero);
         }
 
         /// <inheritdoc/>

@@ -41,7 +41,7 @@ namespace Com.AFBiyik.UIComponents
 
         // Private Fields
         // For scroll
-        private Vector2 prevPos;
+        private Vector2 prevPointerPos;
         private bool isDragging;
         private int firstItemIndex;
         private int visibleItemCount;
@@ -83,11 +83,6 @@ namespace Com.AFBiyik.UIComponents
         }
 
         // Public Properties
-        /// <summary>
-        /// Content transform of the recycle view
-        /// </summary>
-        public RectTransform Content => content;
-
         /// <summary>
         /// Called first
         /// </summary>
@@ -138,6 +133,17 @@ namespace Com.AFBiyik.UIComponents
             content.sizeDelta = new Vector2(content.sizeDelta.x, contentHeight);
             // Create Items
             CreateItems();
+        }
+
+        /// <summary>
+        /// Updates content position
+        /// </summary>
+        /// <param name="anchoredPosition">Content anchored position</param>
+        public void SetContentPosition(Vector2 anchoredPosition)
+        {
+            // Update position
+            content.anchoredPosition = anchoredPosition;
+            CheckItemPositions();
         }
 
         /// <summary>
@@ -284,7 +290,7 @@ namespace Com.AFBiyik.UIComponents
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
             // Get previous position
-            prevPos = GetPointerPosition(eventData);
+            prevPointerPos = GetPointerPosition(eventData);
             // Update time
             pevTimeStamp = DateTime.Now;
             // Start dragging
@@ -304,9 +310,9 @@ namespace Com.AFBiyik.UIComponents
             // Get position
             var pos = GetPointerPosition(eventData);
             // Get position difference
-            float diff = pos.y - prevPos.y;
+            float diff = pos.y - prevPointerPos.y;
             // Update previous position
-            prevPos = pos;
+            prevPointerPos = pos;
 
             // Update position
             content.anchoredPosition += new Vector2(0, diff);
@@ -326,7 +332,7 @@ namespace Com.AFBiyik.UIComponents
             // Get position
             var pos = GetPointerPosition(eventData);
             // Get position difference
-            float posDiff = pos.y - prevPos.y;
+            float posDiff = pos.y - prevPointerPos.y;
             // Get time
             var time = DateTime.Now;
             // Get time difference
