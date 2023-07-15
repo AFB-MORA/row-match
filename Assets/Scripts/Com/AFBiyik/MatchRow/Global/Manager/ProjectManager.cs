@@ -1,22 +1,38 @@
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
-using UnityEngine;
-using Zenject;
+using Com.AFBiyik.MatchRow.Global.Util;
+using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
-public class ProjectManager : MonoBehaviour
+namespace Com.AFBiyik.MatchRow.Global.Manager
 {
-    [Inject]
-    private ILevelManager levelmanager;
-
-    // Start is called before the first frame update
-    async void Start()
+    /// <inheritdoc/>
+    public class ProjectManager : IProjectManager
     {
-        var level = await levelmanager.GetLevel(1);
-        Debug.Log("Level");
-    }
+        /// <inheritdoc/>
+        public LevelModel CurrentLevel { get; private set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        /// <summary>
+        /// Creates project manager.
+        /// </summary>
+        public ProjectManager()
+        {
+
+        }
+
+        /// <inheritdoc/>
+        public void PlayLevel(LevelModel levelModel)
+        {
+            CurrentLevel = levelModel;
+            OpenScene(SceneConstants.GAME_SCENE);
+        }
+
+        /// <summary>
+        /// Opens scene with name
+        /// </summary>
+        /// <param name="scene">Scene name</param>
+        private async void OpenScene(string scene)
+        {
+            await SceneManager.LoadSceneAsync(scene);
+        }
     }
 }

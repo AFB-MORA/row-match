@@ -1,6 +1,7 @@
 using System;
 using Com.AFBiyik.LanguageSystem;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
+using Com.AFBiyik.MatchRow.Global.Manager;
 using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using Zenject;
@@ -25,6 +26,8 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         // Dependencies
         [Inject]
         private ILevelManager levelManager;
+        [Inject]
+        private IProjectManager projectManager;
 
         // Private Fields
         private LevelModel levelModel;
@@ -74,8 +77,7 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         /// </summary>
         public void PlayClick()
         {
-            // TODO open level
-            Debug.Log("Play Level: " + levelModel.LevelNumber);
+            projectManager.PlayLevel(levelModel);
         }
     }
 }

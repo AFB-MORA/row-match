@@ -2,6 +2,7 @@ using Com.AFBiyik.AssetSystem;
 using Com.AFBiyik.Factory;
 using Com.AFBiyik.LanguageSystem;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
+using Com.AFBiyik.MatchRow.Global.Manager;
 using Com.AFBiyik.PopupSystem;
 using Zenject;
 
@@ -15,10 +16,18 @@ namespace Com.AFBiyik.MatchRow.Global.Installer
             BindFactories();
             BindPopupSystem();
             BindLevelSystem();
-            BinLanguageSystem();
+            BindLanguageSystem();
+            BindProjectManager();
         }
 
-        private void BinLanguageSystem()
+        private void BindProjectManager()
+        {
+            Container.BindInterfacesTo<ProjectManager>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindLanguageSystem()
         {
             Container.BindInterfacesTo<LanguageController>()
                 .AsSingle()
