@@ -6,6 +6,7 @@ using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.GameScene.View;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
+using Com.AFBiyik.MatchRow.Global.Manager;
 using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using Zenject;
@@ -25,22 +26,19 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
 
         public override void InstallBindings()
         {
-            LevelModel level = new LevelModel();
-            level.GridWidth = 5;
-            level.GridHeight = 7;
-            level.LevelNumber = 1;
-            level.MoveCount = 40;
-            level.Grid = new string[] { "b", "b", "y", "b", "b", "g", "y", "g", "r", "b", "y", "g", "r", "g", "g", "b", "b", "g", "b", "y", "r", "r", "g", "g", "y", "g", "g", "y", "y", "b", "y", "b", "b", "y", "b" };
+            // Level Model
+            Container.Bind<LevelModel>()
+                .FromMethod(() => Container.Resolve<IProjectManager>().CurrentLevel)
+                .AsSingle();
 
             // GridPresenter
             Container.BindInterfacesTo<GridPresenter>()
                 .AsSingle()
-                .WithArguments(level, gridBounds.Rect);
+                .WithArguments(gridBounds.Rect);
 
             // GridPresenter
             Container.BindInterfacesTo<GamePresenter>()
-                .AsSingle()
-                .WithArguments(level);
+                .AsSingle();
 
             // GridBackgroundCell Factory
             Container.BindInterfacesTo<GenericPrefabFactory<GridBackgroundCell>>()

@@ -7,10 +7,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
     public class GamePresenter : IGamePresenter
     {
-        // Private Fields
+        // Private Readonly Fields
         private readonly ReactiveProperty<int> score;
         private readonly ReactiveProperty<int> highScore;
         private readonly ReactiveProperty<int> moveCount;
+        private readonly ILevelManager levelManager;
+        private readonly LevelModel levelModel;
 
         // Public Properties
         /// <inheritdoc/>
@@ -26,8 +28,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// Creates grid presenter with level model
         /// </summary>
         /// <param name="levelModel"></param>
-        public GamePresenter(LevelModel levelModel)
+        public GamePresenter(LevelModel levelModel, ILevelManager levelManager)
         {
+            this.levelModel = levelModel;
+            this.levelManager = levelManager;
             score = new ReactiveProperty<int>(0);
             highScore = new ReactiveProperty<int>(levelModel.HighScore);
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
@@ -59,7 +63,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             if (highScore.Value < score.Value)
             {
                 highScore.Value = score.Value;
-                // TODO Save high score
+                levelManager.SetHighScore(levelModel.LevelNumber, highScore.Value);
             }
         }
 
