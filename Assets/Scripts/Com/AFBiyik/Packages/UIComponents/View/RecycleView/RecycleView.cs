@@ -236,7 +236,11 @@ namespace Com.AFBiyik.UIComponents
             // Check index is valid
             if (index < dataSource.NumberOfItems)
             {
-                view.name = $"index ({index})";
+                // Set view name to index
+                // Only available in editor
+#if UNITY_EDITOR
+                view.name = $"Index ({index})";
+#endif
                 // Activate view
                 view.SetActive(true);
 
