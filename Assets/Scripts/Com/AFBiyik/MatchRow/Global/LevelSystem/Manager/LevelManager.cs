@@ -78,6 +78,11 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
             PlayerPrefs.SetInt($"LevelHighScore_{level}", score);
             // Update cache
             loadedLevels[level].HighScore = score;
+
+            if (level + 1 <= LevelConstants.NUMBER_OF_LEVELS && loadedLevels[level + 1].IsLocked)
+            {
+                loadedLevels[level + 1].IsLocked = false;
+            }
         }
 
         /// <summary>
