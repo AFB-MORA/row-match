@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Com.AFBiyik.MatchRow.Global.View
+namespace Com.AFBiyik.UIComponents.View
 {
     /// <summary>
     /// Wraps TMPro.TMP_Text around curve.
