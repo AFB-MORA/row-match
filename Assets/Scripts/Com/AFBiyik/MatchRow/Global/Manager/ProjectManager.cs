@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using Com.AFBiyik.MatchRow.Global.Popup;
 using Com.AFBiyik.MatchRow.Global.Util;
@@ -22,6 +23,7 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         public ProjectManager(IPopupController popupController)
         {
             this.popupController = popupController;
+            popupController.PreloadPopups(new List<string>() { PopupConstants.LEVELS_POPUP, PopupConstants.GAME_OVER_POPUP });
         }
 
         /// <inheritdoc/>

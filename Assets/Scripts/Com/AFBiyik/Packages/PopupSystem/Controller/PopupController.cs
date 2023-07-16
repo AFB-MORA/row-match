@@ -252,6 +252,11 @@ namespace Com.AFBiyik.PopupSystem
         /// <inheritdoc/>
         public async UniTask PreloadPopups(IList<string> keys)
         {
+            if (popupParent == null)
+            {
+                await UniTask.WaitUntil(() => popupParent != null);
+            }
+
             UniTask[] tasks = new UniTask[keys.Count];
 
             for (int i = 0; i < keys.Count; i++)
