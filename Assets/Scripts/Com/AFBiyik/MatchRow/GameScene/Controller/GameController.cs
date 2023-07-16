@@ -155,8 +155,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             // Open game over popup
             Hashtable args = new Hashtable();
             args["isHighScore"] = gamePresenter.IsHighScore;
-            args["highScore"] = gamePresenter.Score.Value;
-            args["score"] = gamePresenter.HighScore.Value;
+            args["highScore"] = gamePresenter.HighScore.Value;
+            args["score"] = gamePresenter.Score.Value;
             popupController.Open(PopupConstants.GAME_OVER_POPUP, args);
         }
 
