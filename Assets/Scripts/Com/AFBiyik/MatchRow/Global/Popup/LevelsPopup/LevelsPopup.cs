@@ -59,5 +59,13 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
             // Set level
             cell.SetLevel(index + 1);
         }
+
+        /// <summary>
+        /// Called to close popup
+        /// </summary>
+        public void CloseClick()
+        {
+            ClosePopup();
+        }
     }
 }

@@ -27,12 +27,13 @@ namespace Com.AFBiyik.UIComponents.View
             VertexCurve.postWrapMode = WrapMode.Clamp;
             // Need to force the TextMeshPro Object to be updated.
             m_TextComponent.havePropertiesChanged = true;
+            WarpTextComponent();
         }
 
         private void OnEnable()
         {
             // Update curve
-            m_TextComponent.havePropertiesChanged = true;
+            old_curve = null;
         }
 
         private void Update()
@@ -52,7 +53,7 @@ namespace Com.AFBiyik.UIComponents.View
 
         private void WarpTextComponent()
         {
-            if (!m_TextComponent.havePropertiesChanged && old_CurveScale == CurveScale && old_curve.keys[1].value == VertexCurve.keys[1].value)
+            if (!m_TextComponent.havePropertiesChanged && old_CurveScale == CurveScale && old_curve != null && old_curve.keys[1].value == VertexCurve.keys[1].value)
             {
                 return;
             }
