@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using UniRx;
+using UnityEngine;
 
 namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
@@ -24,6 +26,11 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// True if high score changed; otherwise false
         /// </summary>
         bool IsHighScore { get; }
+
+        /// <summary>
+        /// Animating Views
+        /// </summary>
+        HashSet<GameObject> AnimatingViews { get; set; }
 
         /// <summary>
         /// Updates score

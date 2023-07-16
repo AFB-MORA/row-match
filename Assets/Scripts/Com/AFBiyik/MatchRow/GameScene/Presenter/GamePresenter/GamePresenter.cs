@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Util;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using UniRx;
+using UnityEngine;
 
 namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
@@ -27,6 +29,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <inheritdoc/>
         public bool IsHighScore { get; private set; }
 
+        /// <inheritdoc/>
+        public HashSet<GameObject> AnimatingViews { get; set; }
+
         /// <summary>
         /// Creates grid presenter with level model
         /// </summary>
@@ -39,27 +44,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             highScore = new ReactiveProperty<int>(levelModel.HighScore);
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
             IsHighScore = false;
+            AnimatingViews = new HashSet<GameObject>();
         }
 
         /// <inheritdoc/>
         public void UpdateScore(ItemType itemType, int columns)
         {
-            int scoreToAdd = 0;
-            switch (itemType)
-            {
-                case ItemType.Red:
-                    scoreToAdd = GameConstants.RED_SCORE;
-                    break;
-                case ItemType.Green:
-                    scoreToAdd = GameConstants.GREEN_SCORE;
-                    break;
-                case ItemType.Blue:
-                    scoreToAdd = GameConstants.BLUE_SCORE;
-                    break;
-                case ItemType.Yellow:
-                    scoreToAdd = GameConstants.YELLOW_SCORE;
-                    break;
-            }
+            int scoreToAdd = GameConstants.GetScore(itemType);
 
             score.Value += scoreToAdd * columns;
 

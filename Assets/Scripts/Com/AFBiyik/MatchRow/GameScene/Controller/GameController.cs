@@ -5,9 +5,11 @@ using System.Linq;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using Com.AFBiyik.MatchRow.GameScene.VFX;
 using Com.AFBiyik.MatchRow.GameScene.View;
 using Com.AFBiyik.MatchRow.Global.Popup;
 using Com.AFBiyik.PopupSystem;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -18,6 +20,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
     /// </summary>
     public class GameController : IDisposable
     {
+        // Constants
+        private const float TOTAL_ANIMATION_TIME = CompletedEffect.SCORE_MOVE_TWEEN_TIME + 1;
+
         // Private Readonly Fields
         private readonly IGridPresenter gridPresenter;
         private readonly IGamePresenter gamePresenter;
@@ -147,7 +152,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         /// <summary>
         /// Ends the game
         /// </summary>
-        private void GameOver()
+        private async void GameOver()
         {
             swipeDisposable?.Dispose();
             swipeDisposable = null;
@@ -157,6 +162,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             args["isHighScore"] = gamePresenter.IsHighScore;
             args["highScore"] = gamePresenter.HighScore.Value;
             args["score"] = gamePresenter.Score.Value;
+
+            if (gamePresenter.AnimatingViews.Count > 0)
+            {
+                await UniTask.WaitUntil(() => gamePresenter.AnimatingViews.Count == 0);
+            }
+
             popupController.Open(PopupConstants.GAME_OVER_POPUP, args);
         }
 

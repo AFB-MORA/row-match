@@ -1,5 +1,6 @@
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.Global.Util;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -45,6 +46,15 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// </summary>
         /// <param name="newValue"></param>
         protected virtual async void OnValueChange(int newValue)
+        {
+            await OnValueChangeAsync(newValue);
+        }
+
+        /// <summary>
+        /// Called when value changes.
+        /// </summary>
+        /// <param name="newValue"></param>
+        protected virtual async UniTask OnValueChangeAsync(int newValue)
         {
             if (isInitial || !tweenValueUpdates)
             {

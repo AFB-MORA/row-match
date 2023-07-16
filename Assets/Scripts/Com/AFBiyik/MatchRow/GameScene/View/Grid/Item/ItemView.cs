@@ -7,6 +7,9 @@ using Zenject;
 
 namespace Com.AFBiyik.MatchRow.GameScene.View
 {
+    /// <summary>
+    /// Grid item view
+    /// </summary>
     public class ItemView : MonoBehaviour
     {
         // Constants
@@ -29,6 +32,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         // Dependencies
         [Inject]
         private IGridPresenter gridPresenter;
+        [Inject]
+        private IGamePresenter gamePresenter;
 
         // Public Properties
         public ItemType ItemType => itemType;
@@ -49,11 +54,15 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             // Set position
             transform.position = gridPresenter.GridPositionToWorldPosition(gridPosition);
 
-            // Set cell size
+            // Get cell size
             float size2 = gridPresenter.CellSize / 2f;
+            // Set image
             image.size = new Vector2(gridPresenter.CellSize, gridPresenter.CellSize);
+            image.transform.localPosition = new Vector3(size2, size2, 0);
+            // Set completed object
             completedObject.size = new Vector2(gridPresenter.CellSize, gridPresenter.CellSize);
             completedObject.transform.localPosition = new Vector3(size2, size2, 0);
+            // Set collider
             circleCollider.radius = size2;
             circleCollider.offset = new Vector2(circleCollider.radius, circleCollider.radius);
 
@@ -65,14 +74,20 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// Moves item to new grid position.
         /// </summary>
         /// <param name="gridPosition">New grid position</param>
-        public void MoveTo(Vector2Int gridPosition)
+        public async void MoveTo(Vector2Int gridPosition)
         {
+            // Add to animating views
+            gamePresenter.AnimatingViews.Add(gameObject);
+
             // Set grid position
             this.gridPosition = gridPosition;
 
             // Set position
             var newPosition = gridPresenter.GridPositionToWorldPosition(gridPosition);
-            transform.DOMove(newPosition, MOVE_TWEEN_TIME);
+            await transform.DOMove(newPosition, MOVE_TWEEN_TIME);
+
+            // Remove from animating views
+            gamePresenter.AnimatingViews.Remove(gameObject);
         }
 
         /// <summary>
@@ -93,12 +108,16 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// </summary>
         private async void ShowCompleted()
         {
+            // Wait for move
             await UniTask.Delay((int)(MOVE_TWEEN_TIME * 1000));
+            // Set completed
             completedObject.gameObject.SetActive(true);
             completedObject.color = new Color(1, 1, 1, 0);
+            // Animate
             await UniTask.WhenAll(
                 completedObject.DOFade(1, SCALE_TWEEN_TIME).ToUniTask(),
                 image.transform.DOScale(new Vector3(0, 0, 0), SCALE_TWEEN_TIME).ToUniTask());
+            // Disable image
             image.gameObject.SetActive(false);
         }
     }
