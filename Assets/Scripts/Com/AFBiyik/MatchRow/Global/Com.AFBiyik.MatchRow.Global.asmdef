@@ -11,7 +11,8 @@
         "Com.AFBiyik.MatchRow.Global.LevelSystem",
         "UniTask",
         "Unity.TextMeshPro",
-        "Com.AFBiyik.LanguageSystem"
+        "Com.AFBiyik.LanguageSystem",
+        "UniTask.DOTween"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

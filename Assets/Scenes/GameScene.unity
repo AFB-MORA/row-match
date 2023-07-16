@@ -275,7 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6496fa60f214a72b1eee44f6367608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveCountValue: {fileID: 626319184}
+  valueText: {fileID: 626319184}
+  tweenValueUpdates: 1
 --- !u!1 &377310239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa26e43e638e494db365d5a88688998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highScoreValue: {fileID: 1672151672}
+  valueText: {fileID: 1672151672}
+  tweenValueUpdates: 1
 --- !u!1 &1805297327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,7 +1418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18848d8bc45494a25a46beeeafc2baa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: {fileID: 2006705100}
+  valueText: {fileID: 2006705100}
+  tweenValueUpdates: 1
 --- !u!1001 &438257855412241632
 PrefabInstance:
   m_ObjectHideFlags: 0
