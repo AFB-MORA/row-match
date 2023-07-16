@@ -102,5 +102,26 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
             int prevHighScore = GetHighScore(level - 1);
             return prevHighScore == 0;
         }
+
+        /// <inheritdoc/>
+        public int GetLastLevel()
+        {
+            // Set level
+            int level = 1;
+
+            // For each level
+            for (int i = LevelConstants.NUMBER_OF_LEVELS; i > 0; i--)
+            {
+                // If not locked
+                if (!IsLevelLocked(i))
+                {
+                    // Set level
+                    level = i;
+                    break;
+                }
+            }
+
+            return level;
+        }
     }
 }
