@@ -82,19 +82,18 @@ namespace Com.AFBiyik.UIComponents
             }
         }
 
-        // Public Properties
-        /// <summary>
-        /// Called first
-        /// </summary>
         protected override void Awake()
         {
             base.Awake();
             SetBounds();
         }
 
-        /// <summary>
-        /// Called when rect transform changes
-        /// </summary>
+        protected override void OnEnable()
+        {
+            firstItemIndex = -1;
+            CheckItemPositions();
+        }
+
         protected override void OnRectTransformDimensionsChange()
         {
             base.OnRectTransformDimensionsChange();
@@ -143,6 +142,7 @@ namespace Com.AFBiyik.UIComponents
         {
             // Update position
             content.anchoredPosition = anchoredPosition;
+            firstItemIndex = -1;
             CheckItemPositions();
         }
 
@@ -236,7 +236,11 @@ namespace Com.AFBiyik.UIComponents
             // Check index is valid
             if (index < dataSource.NumberOfItems)
             {
-                view.name = $"index ({index})";
+                // Set view name to index
+                // Only available in editor
+#if UNITY_EDITOR
+                view.name = $"Index ({index})";
+#endif
                 // Activate view
                 view.SetActive(true);
 

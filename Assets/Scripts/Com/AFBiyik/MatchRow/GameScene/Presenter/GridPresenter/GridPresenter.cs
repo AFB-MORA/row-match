@@ -26,10 +26,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         public int Rows => rows;
 
         /// <inheritdoc/>
-        public int Colums => columns;
+        public int Columns => columns;
 
         /// <inheritdoc/>
         public float CellSize => cellSize;
+
+        /// <inheritdoc/>
+        public Rect Rect => new Rect(origin, new Vector2(Columns * CellSize, Rows * CellSize));
 
         /// <summary>
         /// Creates grid presenter with level model and bounding rect
@@ -107,7 +110,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         public void CompleteRow(int row)
         {
             // For each column
-            for (int x = 0; x < Colums; x++)
+            for (int x = 0; x < Columns; x++)
             {
                 // Get index
                 int index = GetItemIndex(new Vector2Int(x, row));
@@ -122,7 +125,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             List<ItemType> items = new List<ItemType>();
 
             // For each column
-            for (int x = 0; x < Colums; x++)
+            for (int x = 0; x < Columns; x++)
             {
                 // Get item
                 int index = GetItemIndex(new Vector2Int(x, row));

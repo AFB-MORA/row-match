@@ -9,5 +9,6 @@ namespace Com.AFBiyik.UIComponents
         None,
         Sprite,
         GameObject,
+        Scale
     }
 }

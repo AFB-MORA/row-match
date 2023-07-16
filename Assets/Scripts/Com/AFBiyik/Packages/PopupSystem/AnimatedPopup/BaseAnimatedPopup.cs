@@ -39,7 +39,7 @@ namespace Com.AFBiyik.PopupSystem
         {
             get
             {
-                if (openTrigger == null)
+                if (OpenState != null && openTrigger == null)
                 {
                     openTrigger = animator.GetBehaviourAtState<PopupAnimationBehaviour>(OpenState);
                 }
@@ -54,7 +54,7 @@ namespace Com.AFBiyik.PopupSystem
         {
             get
             {
-                if (closeTrigger == null)
+                if (CloseState != null && closeTrigger == null)
                 {
                     closeTrigger = animator.GetBehaviourAtState<PopupAnimationBehaviour>(CloseState);
                 }
@@ -69,6 +69,11 @@ namespace Com.AFBiyik.PopupSystem
         {
             try
             {
+                if (OpenState == null)
+                {
+                    return;
+                }
+
                 animator.Play(OpenState);
                 await OpenTrigger.OnStateExitAsObservable().First().ToUniTask();
             }
@@ -83,6 +88,11 @@ namespace Com.AFBiyik.PopupSystem
         {
             try
             {
+                if (CloseState == null)
+                {
+                    return;
+                }
+
                 animator.Play(CloseState);
                 await CloseTrigger.OnStateExitAsObservable().First().ToUniTask();
             }

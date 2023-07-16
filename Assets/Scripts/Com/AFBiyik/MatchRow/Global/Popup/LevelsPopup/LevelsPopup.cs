@@ -10,7 +10,7 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
     /// <summary>
     /// Popup that shows levels
     /// </summary>
-    public class LevelsPopup : BasePopup, IRecycleViewDataSource
+    public class LevelsPopup : BaseAnimatedPopup, IRecycleViewDataSource
     {
         //Serialize Fields
         [SerializeField]
@@ -23,6 +23,9 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         private ILevelManager levelManager;
         [Inject]
         private IFactory<GameObject, GameObject> prefabFactory;
+
+        // Protected Properties
+        protected override string CloseState => null;
 
         /// <inheritdoc/>
         public int NumberOfItems => levelManager.NumberOfLevels;
@@ -58,6 +61,14 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
             var cell = view.GetComponent<LevelCell>();
             // Set level
             cell.SetLevel(index + 1);
+        }
+
+        /// <summary>
+        /// Called to close popup
+        /// </summary>
+        public void CloseClick()
+        {
+            ClosePopup();
         }
     }
 }

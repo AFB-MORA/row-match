@@ -105,7 +105,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             }
 
             // Check next position
-            if (nextPosition.x < 0 || nextPosition.x >= gridPresenter.Colums ||
+            if (nextPosition.x < 0 || nextPosition.x >= gridPresenter.Columns ||
                 nextPosition.y < 0 || nextPosition.y >= gridPresenter.Rows)
             {
                 return;
@@ -136,7 +136,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             }
 
             // Check Has Moves
-            if (!HasMoves())
+            if (!HasMoves()) // TODO move to different class
             {
                 // Game Over
                 GameOver();
@@ -155,8 +155,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             // Open game over popup
             Hashtable args = new Hashtable();
             args["isHighScore"] = gamePresenter.IsHighScore;
-            args["highScore"] = gamePresenter.Score.Value;
-            args["score"] = gamePresenter.HighScore.Value;
+            args["highScore"] = gamePresenter.HighScore.Value;
+            args["score"] = gamePresenter.Score.Value;
             popupController.Open(PopupConstants.GAME_OVER_POPUP, args);
         }
 
@@ -215,7 +215,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             gridPresenter.CompleteRow(row);
 
             // Update score
-            gamePresenter.UpdateScore(firstItem, gridPresenter.Colums);
+            gamePresenter.UpdateScore(firstItem, gridPresenter.Columns);
         }
 
 
@@ -258,7 +258,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
                 // For each isolated group
                 ).Any(
                     // Check is there enough item to complete row
-                    list => list.Any(group => group.count >= gridPresenter.Colums)
+                    list => list.Any(group => group.count >= gridPresenter.Columns)
                 );
         }
 
@@ -270,7 +270,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         {
             int minMove = int.MaxValue;
 
-            int columns = gridPresenter.Colums;
+            int columns = gridPresenter.Columns;
 
             var solutionGroups = isolatedItems
                 // Map item list and item type to count

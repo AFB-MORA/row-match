@@ -18,12 +18,17 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <summary>
         /// Number of columns
         /// </summary>
-        int Colums { get; }
+        int Columns { get; }
 
         /// <summary>
         /// Grid cell size in world units
         /// </summary>
         float CellSize { get; }
+
+        /// <summary>
+        /// Rect of the grid area
+        /// </summary>
+        Rect Rect { get; }
 
         /// <summary>
         /// Grid items starting from bottom left

@@ -52,6 +52,19 @@ namespace Com.AFBiyik.UIComponents
                     EditorUtility.SetDirty(button);
                 }
             }
+            else if (serializedObject.FindProperty("stateType").intValue == (int)ChangeableButtonType.Scale)
+            {
+                if (button.ChangeableButton is ChangeableButtonScale)
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("changeableButton"));
+                }
+                else
+                {
+                    button.ChangeableButton = new ChangeableButtonScale();
+                    button.ChangeableButton.selectable = button;
+                    EditorUtility.SetDirty(button);
+                }
+            }
 
             serializedObject.ApplyModifiedProperties();
         }
