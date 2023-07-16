@@ -304,17 +304,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEVELS
+  m_text: Levels
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c2b085095688f4a189356a2d248a412c, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: ba3c8de2965bd405da03b20dbfbd77c7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fcdbdea126b174a34a1aadc0bb771d44, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: afe9a9f1b3dbe42cf9dd9f5911a7996f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4290243570
+  m_fontColor: {r: 0.9490196, g: 0.92156863, b: 0.7176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -396,7 +396,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba3c8de2965bd405da03b20dbfbd77c7, type: 2}
+  - {fileID: 2100000, guid: afe9a9f1b3dbe42cf9dd9f5911a7996f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -742,7 +742,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.64, y: 0.64, z: 0.64, w: 0.64}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4.73, y: 1.92}
     newSize: {x: 4.73, y: 1.92}
