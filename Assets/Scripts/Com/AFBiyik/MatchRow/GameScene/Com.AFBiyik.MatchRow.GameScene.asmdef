@@ -13,7 +13,8 @@
         "Com.AFBiyik.MatchRow.Global",
         "DOTween.Modules",
         "UniTask.DOTween",
-        "Com.AFBiyik.PopupSystem"
+        "Com.AFBiyik.PopupSystem",
+        "Unity.2D.SpriteShape.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

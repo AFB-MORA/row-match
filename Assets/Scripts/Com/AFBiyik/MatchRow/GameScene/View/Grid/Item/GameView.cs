@@ -3,6 +3,7 @@ using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using UniRx;
 using UnityEngine;
+using UnityEngine.U2D;
 using Zenject;
 
 namespace Com.AFBiyik.MatchRow.GameScene.View
@@ -44,6 +45,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
                 items.Add(item);
             }
 
+            // Subscribe to grid
             gridPresenter.Grid.ObserveMove()
                 .TakeUntilDestroy(gameObject)
                 .Subscribe(OnMove);
