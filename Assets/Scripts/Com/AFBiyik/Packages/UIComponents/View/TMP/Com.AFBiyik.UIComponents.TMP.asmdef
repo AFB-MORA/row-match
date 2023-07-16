@@ -1,7 +1,9 @@
 {
-    "name": "Com.AFBiyik.UIComponents",
+    "name": "Com.AFBiyik.UIComponents.TMP",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "Unity.TextMeshPro"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

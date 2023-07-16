@@ -8,7 +8,7 @@ namespace Com.AFBiyik.MatchRow.Global.View
     /// Modified version of <see cref="TMPro.Examples.WarpTextExample"/>
     /// </summary>
     [ExecuteAlways]
-    public class WarpText : MonoBehaviour
+    public class WarpTmpText : MonoBehaviour
     {
         private TMP_Text m_TextComponent;
 
@@ -26,6 +26,12 @@ namespace Com.AFBiyik.MatchRow.Global.View
             VertexCurve.preWrapMode = WrapMode.Clamp;
             VertexCurve.postWrapMode = WrapMode.Clamp;
             // Need to force the TextMeshPro Object to be updated.
+            m_TextComponent.havePropertiesChanged = true;
+        }
+
+        private void OnEnable()
+        {
+            // Update curve
             m_TextComponent.havePropertiesChanged = true;
         }
 
