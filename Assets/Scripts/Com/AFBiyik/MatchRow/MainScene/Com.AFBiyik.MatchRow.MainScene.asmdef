@@ -1,0 +1,17 @@
+{
+    "name": "Com.AFBiyik.MatchRow.MainScene",
+    "rootNamespace": "",
+    "references": [
+        "Com.AFBiyik.MatchRow.Global",
+        "Com.AFBiyik.PopupSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Audio
+  m_EditorClassIdentifier: 
+  m_GroupName: Audio
+  m_Data:
+    m_SerializedData: []
+  m_GUID: de2ebfd7257f644ca8426710aeb91711
+  m_SerializeEntries:
+  - m_GUID: 489806e6642dd421290cc7062bf3e8f8
+    m_Address: Swipe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 1572a0601c89340708b329e44cbcc1c0
+    m_Address: Celebration
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 570e5fffbd1eb490ba979b2333dca51e
+    m_Address: Click
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: d8e7afde7513848bf94d7eb2f459b239
+    m_Address: Score
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 5b962cf413c8140d6977c55bf9c5e3f0
+    m_Address: Popup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 468fdb41492364789b8363bc7f5a585e
+    m_Address: Pop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 1d5cc9354ddb7439db85ac8eacf03ef6
+    m_Address: GameOver
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 0ffc02e02412f4d75a66562321075f95
+    m_Address: Star
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 86694d22af6484d539dac3737e1fd193
+    m_Address: Music
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - music
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3ac00afe463414278b33dfdfcb8b8a97, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a9c14b7bbcd15426ca6a3f1b9a6429f0, type: 2}
+    - {fileID: 11400000, guid: cebe2be7368b64ff4bea807429a4f68f, type: 2}

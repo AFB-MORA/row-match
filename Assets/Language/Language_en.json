@@ -1,0 +1,13 @@
+{
+    "levels": "Levels",
+    "levelCellLevel": "Level [0] - [1] Moves",
+    "levelCellScore": "Highest Score: [0]",
+    "lockedLevel": "Locked Level",
+    "congratulations": "Congratulations!",
+    "highestScore": "Highest Score",
+    "gameOver": "Game Over!",
+    "score": "Score",
+    "tapToContinue": "Tap to Continue",
+    "moves": "Moves",
+    "highScore": "High Score"
+}
