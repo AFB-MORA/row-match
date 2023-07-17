@@ -1,3 +1,4 @@
+using System;
 using Com.AFBiyik.MatchRow.GameScene.VFX;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -20,15 +21,20 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         protected override async UniTask OnValueChangeAsync(int newValue)
         {
             // Add to animating views
-            gamePresenter.AnimatingViews.Add(gameObject);
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
 
-            // Wait move animation
-            await UniTask.Delay((int)(CompletedEffect.SCORE_MOVE_TWEEN_TIME * 1000));
+            if (!isInitial)
+            {
+                // Wait move animation
+                await UniTask.Delay((int)(CompletedEffect.SCORE_MOVE_TWEEN_TIME * 1000));
+            }
+
             // Change value
             await base.OnValueChangeAsync(newValue);
 
             // Remove from animating views
-            gamePresenter.AnimatingViews.Remove(gameObject);
+            gamePresenter.AnimatingViews.Remove(animation);
         }
     }
 }

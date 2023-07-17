@@ -1,3 +1,5 @@
+using System;
+using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -22,6 +24,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.VFX
         [SerializeField]
         private TMP_Text scoreText;
 
+        // Dependencies
+        [Inject]
+        private IGamePresenter gamePresenter;
+
         private void Awake()
         {
             gameObject.SetActive(false);
@@ -38,6 +44,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.VFX
         /// <returns></returns>
         public async UniTask Show(Color fromColor, Color toColor, Vector3 position, Vector3 scorePosition, float score)
         {
+            // Add to animating views
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
+
             // Enable game object
             gameObject.SetActive(true);
 
@@ -70,6 +80,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.VFX
 
             // Reset score
             scoreText.text = "";
+
+            // Remove from animating views
+            gamePresenter.AnimatingViews.Remove(animation);
 
             // Wait for particles
             await UniTask.Delay((int)(lifeTime * 1000));

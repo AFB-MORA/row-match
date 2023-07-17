@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using UniRx;
-using UnityEngine;
 
 namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
@@ -36,7 +35,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <summary>
         /// Animating Views
         /// </summary>
-        HashSet<GameObject> AnimatingViews { get; set; }
+        HashSet<Guid> AnimatingViews { get; set; }
 
         /// <summary>
         /// Updates score

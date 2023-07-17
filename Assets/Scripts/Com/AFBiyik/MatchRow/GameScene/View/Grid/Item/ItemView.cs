@@ -1,3 +1,4 @@
+using System;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
 using Com.AFBiyik.MatchRow.Global.Util;
@@ -96,7 +97,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         public async void MoveTo(Vector2Int gridPosition)
         {
             // Add to animating views
-            gamePresenter.AnimatingViews.Add(gameObject);
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
 
             // Set grid position
             this.gridPosition = gridPosition;
@@ -106,7 +108,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             await transform.DOMove(newPosition, MOVE_TWEEN_TIME);
 
             // Remove from animating views
-            gamePresenter.AnimatingViews.Remove(gameObject);
+            gamePresenter.AnimatingViews.Remove(animation);
         }
 
         /// <summary>
@@ -146,15 +148,26 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// <param name="_">null</param>
         private async void OnGameOver(object _)
         {
-            await UniTask.Delay((int)((MOVE_TWEEN_TIME) * 1000));
+            // Add to animating views
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
 
-            await NumberTween.TweenFloat(0, 1, 0.6f, (value) =>
+            // Wait
+            await UniTask.Delay((int)(MOVE_TWEEN_TIME * 1000) + 100 * gridPosition.y);
+
+            // Tween
+            await NumberTween.TweenFloat(0, 1, 0.4f, (value) =>
             {
                 imagePropertyBlock.SetFloat("_EffectAmount", value);
                 completedPropertyBlock.SetFloat("_EffectAmount", value);
                 image.SetPropertyBlock(imagePropertyBlock);
                 completedObject.SetPropertyBlock(completedPropertyBlock);
             });
+
+            await UniTask.Delay(150);
+
+            // Remove from animating views
+            gamePresenter.AnimatingViews.Remove(animation);
         }
     }
 }

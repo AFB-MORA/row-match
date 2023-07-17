@@ -32,7 +32,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         public bool IsHighScore { get; private set; }
 
         /// <inheritdoc/>
-        public HashSet<GameObject> AnimatingViews { get; set; }
+        public HashSet<Guid> AnimatingViews { get; set; }
 
         /// <inheritdoc/>
         public IObservable<object> OnGameOver => onGameOver;
@@ -49,7 +49,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             highScore = new ReactiveProperty<int>(levelModel.HighScore);
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
             IsHighScore = false;
-            AnimatingViews = new HashSet<GameObject>();
+            AnimatingViews = new HashSet<Guid>();
             onGameOver = new Subject<object>();
         }
 

@@ -1,3 +1,4 @@
+using System;
 using Com.AFBiyik.MatchRow.GameScene.VFX;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -33,12 +34,16 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         protected override async UniTask OnValueChangeAsync(int newValue)
         {
             // Add to animating views
-            gamePresenter.AnimatingViews.Add(gameObject);
-
-            // Wait move animation
-            await UniTask.Delay((int)(CompletedEffect.SCORE_MOVE_TWEEN_TIME * 1000));
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
 
             bool initial = isInitial;
+
+            if (!initial)
+            {
+                // Wait move animation
+                await UniTask.Delay((int)(CompletedEffect.SCORE_MOVE_TWEEN_TIME * 1000));
+            }
 
             // Change value
             UniTask baseTask = base.OnValueChangeAsync(newValue);
@@ -46,20 +51,35 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             // If not initial
             if (!initial)
             {
-                // Show effect
-                highScoreEffect.SetActive(true);
-                await UniTask.WhenAll(baseTask,
-                    UniTask.Delay((int)(lifeTime * 1000))
-                    );
-                highScoreEffect.SetActive(false);
+                await UniTask.WhenAll(ShowEffect(),
+                    BaseTask(baseTask, animation)
+                );
             }
             else
             {
-                await baseTask;
+                await BaseTask(baseTask, animation);
             }
+        }
+
+        private async UniTask BaseTask(UniTask baseTask, Guid animation)
+        {
+            await baseTask;
+
+            await UniTask.Delay((int)(lifeTime * 1000 * 0.3f));
 
             // Remove from animating views
-            gamePresenter.AnimatingViews.Remove(gameObject);
+            gamePresenter.AnimatingViews.Remove(animation);
+        }
+
+        private async UniTask ShowEffect()
+        {
+            // Show effect
+            highScoreEffect.SetActive(true);
+
+            await UniTask.Delay((int)(lifeTime * 1000));
+
+            // Hide effect
+            highScoreEffect.SetActive(false);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
@@ -87,9 +86,6 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// <param name="event"></param>
         private async void OnReplace(CollectionReplaceEvent<ItemType> replaceEvent)
         {
-            // Add to animating views
-            gamePresenter.AnimatingViews.Add(gameObject);
-
             // Get item
             var item = items[replaceEvent.Index];
             // Update item
@@ -119,9 +115,6 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
 
             // Despawn effect
             completedEffectPool.Despawn(effect);
-
-            // Remove from animating views
-            gamePresenter.AnimatingViews.Remove(gameObject);
         }
     }
 }
