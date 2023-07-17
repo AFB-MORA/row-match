@@ -3,6 +3,7 @@ using Com.AFBiyik.AudioSystem;
 using Com.AFBiyik.MatchRow.Global.Manager;
 using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.PopupSystem;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -31,6 +32,8 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         private GameObject celebrationView;
         [SerializeField]
         private GameObject normalView;
+        [SerializeField]
+        private GameObject nextButton;
 
         // Dependencies
         [Inject]
@@ -46,6 +49,8 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         public override async void OnOpened(Hashtable args)
         {
             base.OnOpened(args);
+
+            nextButton.SetActive(false);
 
             starSource = null;
             celebrationSource = null;
@@ -71,9 +76,12 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
             }
             else
             {
-                starSource = await soundController.PlayAndGetSource(new Sound(SoundConstants.STAR, loop: true, volume: 0.1f));
-                celebrationSource = await soundController.PlayAndGetSource(new Sound(SoundConstants.CELEBRATION, volume: 0.1f));
+                starSource = await soundController.PlayAndGetSource(new Sound(SoundConstants.STAR, loop: true, volume: 0.3f));
+                celebrationSource = await soundController.PlayAndGetSource(new Sound(SoundConstants.CELEBRATION, volume: 0.5f));
             }
+
+            await UniTask.Delay(1000);
+            nextButton.SetActive(true);
         }
 
         /// <inheritdoc/>
