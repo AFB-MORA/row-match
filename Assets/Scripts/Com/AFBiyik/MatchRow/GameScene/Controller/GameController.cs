@@ -417,7 +417,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
                 return true;
             }
             // down
-            else if (y - 1 >= 0 && y + 1 != notY && GetClosestItemRecursive(subGrid, visited, target, x, y - 1, notY, rows, columns, out count))
+            else if (y - 1 >= 0 && y - 1 != notY && GetClosestItemRecursive(subGrid, visited, target, x, y - 1, notY, rows, columns, out count))
             {
                 count++;
                 return true;
