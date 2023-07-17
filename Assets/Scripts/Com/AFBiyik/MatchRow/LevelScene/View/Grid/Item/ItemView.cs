@@ -1,13 +1,12 @@
 using System;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.MatchRow.LevelScene.Enumeration;
 using Com.AFBiyik.MatchRow.LevelScene.Presenter;
-using Com.AFBiyik.MatchRow.Global.Util;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using Zenject;
-using static UnityEditor.Progress;
 
 namespace Com.AFBiyik.MatchRow.LevelScene.View
 {
@@ -71,6 +70,14 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
             // Set object name
             gameObject.name = $"({gridPosition.x}, {gridPosition.y})";
 
+            UpdateSize();
+        }
+
+        /// <summary>
+        /// Update cell size
+        /// </summary>
+        public void UpdateSize()
+        {
             // Set position
             transform.position = gridPresenter.GridPositionToWorldPosition(gridPosition);
 

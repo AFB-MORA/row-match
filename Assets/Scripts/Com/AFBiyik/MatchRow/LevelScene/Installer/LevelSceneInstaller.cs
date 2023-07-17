@@ -12,6 +12,7 @@ using Com.AFBiyik.Pool;
 using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using Zenject;
+using System;
 
 namespace Com.AFBiyik.MatchRow.LevelScene.Installer
 {
@@ -32,12 +33,20 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Installer
 
         public override void InstallBindings()
         {
+            BindBounds();
             BindLevelModel();
             BindPresenters();
             BindFactories();
             BindPools();
             BindInput();
             BindGameController();
+        }
+
+        private void BindBounds()
+        {
+            Container.Bind<BoundsView>()
+                .FromInstance(gridBounds)
+                .AsSingle();
         }
 
         private void BindGameController()
@@ -84,8 +93,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Installer
         {
             // GridPresenter
             Container.BindInterfacesTo<GridPresenter>()
-                .AsSingle()
-                .WithArguments(gridBounds.Rect);
+                .AsSingle();
 
             // GridPresenter
             Container.BindInterfacesTo<GamePresenter>()

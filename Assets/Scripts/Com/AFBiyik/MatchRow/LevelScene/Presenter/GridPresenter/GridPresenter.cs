@@ -5,6 +5,7 @@ using Com.AFBiyik.MatchRow.LevelScene.Util;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using UniRx;
 using UnityEngine;
+using Com.AFBiyik.UIComponents;
 
 namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
 {
@@ -12,11 +13,14 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
     public class GridPresenter : IGridPresenter
     {
         // Private Readonly Fields
-        private readonly float cellSize;
         private readonly int rows;
         private readonly int columns;
         private readonly ReactiveCollection<ItemType> grid;
-        private readonly Vector2 origin;
+        private readonly BoundsView boundsView;
+
+        // Private Fields
+        private float cellSize;
+        private Vector2 origin;
 
         // Public properties
         /// <inheritdoc/>
@@ -38,8 +42,14 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
         /// Creates grid presenter with level model and bounding rect
         /// </summary>
         /// <param name="levelModel"></param>
-        public GridPresenter(LevelModel levelModel, Rect rect)
+        /// <param name="boundsView"></param>
+        public GridPresenter(LevelModel levelModel, BoundsView boundsView)
         {
+            // Set bounds view
+            this.boundsView = boundsView;
+            // Subscribe bound change
+            boundsView.onBoundsChange.AddListener(SetRect);
+
             // Initialize grid
             grid = new ReactiveCollection<ItemType>(levelModel.Grid
                 .Select(i => i.ToItemType()));
@@ -48,15 +58,8 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
             columns = levelModel.GridWidth;
             rows = levelModel.GridHeight;
 
-            // Calculate cell size
-            float cellWidth = rect.size.x / columns;
-            float cellHeight = rect.size.y / rows;
-            cellSize = Mathf.Min(cellWidth, cellHeight);
-
-            // Calculate origin
-            float width = columns * cellSize;
-            float height = rows * cellSize;
-            origin = rect.position - new Vector2(width / 2f, height / 2f);
+            // Set rect
+            SetRect();
         }
 
         /// <inheritdoc/>
@@ -134,6 +137,25 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
             }
 
             return items;
+        }
+
+        /// <summary>
+        /// Sets rect
+        /// </summary>
+        private void SetRect()
+        {
+            // Get rect
+            var rect = boundsView.Rect;
+
+            // Calculate cell size
+            float cellWidth = rect.size.x / columns;
+            float cellHeight = rect.size.y / rows;
+            cellSize = Mathf.Min(cellWidth, cellHeight);
+
+            // Calculate origin
+            float width = columns * cellSize;
+            float height = rows * cellSize;
+            origin = rect.position - new Vector2(width / 2f, height / 2f);
         }
     }
 }

@@ -20,18 +20,21 @@ namespace Com.AFBiyik.UIComponents.View
         // Private Fields
         private Camera cam;
 
+        private float currectAspect;
+
         private void Awake()
         {
             cam = GetComponent<Camera>();
             SetCameraSize();
         }
 
-#if UNITY_EDITOR
         private void Update()
         {
-            SetCameraSize();
+            if (cam.aspect != currectAspect)
+            {
+                SetCameraSize();
+            }
         }
-#endif
 
         /// <summary>
         /// Sets camera size
@@ -40,6 +43,7 @@ namespace Com.AFBiyik.UIComponents.View
         {
             // Get aspect
             float aspect = cam.aspect;
+            currectAspect = aspect;
 
             // If horizontal orientation
             if (aspect > 1)

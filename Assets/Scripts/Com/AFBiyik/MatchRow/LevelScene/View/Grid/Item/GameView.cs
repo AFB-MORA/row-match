@@ -3,6 +3,7 @@ using Com.AFBiyik.MatchRow.LevelScene.Enumeration;
 using Com.AFBiyik.MatchRow.LevelScene.Presenter;
 using Com.AFBiyik.MatchRow.LevelScene.Util;
 using Com.AFBiyik.MatchRow.LevelScene.VFX;
+using Com.AFBiyik.UIComponents;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -26,6 +27,8 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
         private IGamePresenter gamePresenter;
         [Inject]
         private IMemoryPool<CompletedEffect> completedEffectPool;
+        [Inject]
+        private BoundsView boundsView;
 
         // Private Fields
         private List<ItemView> items;
@@ -33,6 +36,18 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
         private void Awake()
         {
             Initialize();
+        }
+
+        /// <summary>
+        /// Updates grid
+        /// </summary>
+        private void UpdateGrid()
+        {
+            // Update items
+            foreach (var item in items)
+            {
+                item.UpdateSize();
+            }
         }
 
         /// <summary>
@@ -60,6 +75,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
             gridPresenter.Grid.ObserveReplace()
                 .TakeUntilDestroy(gameObject)
                 .Subscribe(OnReplace);
+
+            // Subscribe dimention change
+            boundsView.onBoundsChange.AddListener(UpdateGrid);
         }
 
         /// <summary>

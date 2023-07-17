@@ -15,18 +15,18 @@ namespace Com.AFBiyik.UIComponents
             SetRectTransform();
         }
 
-#if UNITY_EDITOR
         protected override void Update()
         {
-            if (!Application.isPlaying)
+            if (currectAspect != Camera.main.aspect)
             {
                 // Update transform.
-                // Editor only
                 rect = GetRect();
                 SetRectTransform();
+                onBoundsChange?.Invoke();
             }
         }
 
+#if UNITY_EDITOR
         protected override void OnDrawGizmos()
         {
             // No need to draw gizmoz

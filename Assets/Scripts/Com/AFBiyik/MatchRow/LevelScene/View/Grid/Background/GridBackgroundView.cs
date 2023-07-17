@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.LevelScene.Presenter;
+using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using UnityEngine.U2D;
 using Zenject;
@@ -25,6 +27,11 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
         private IGridPresenter gridPresenter;
         [Inject]
         private IFactory<GridBackgroundCell, Transform, GridBackgroundCell> gridBackgroundCellFactory;
+        [Inject]
+        private BoundsView boundsView;
+
+        // Private Fields
+        private GridBackgroundCell[,] gridBackgroundCells;
 
         private void Awake()
         {
@@ -36,6 +43,8 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
         /// </summary>
         private void Initialize()
         {
+            gridBackgroundCells = new GridBackgroundCell[gridPresenter.Columns, gridPresenter.Rows];
+
             // For each column
             for (int x = 0; x < gridPresenter.Columns; x++)
             {
@@ -44,7 +53,31 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
                 {
                     // Create and initialize cell
                     var cell = gridBackgroundCellFactory.Create(gridBackgroundCellPrefab, gridCellContent);
-                    cell.Initialize(new Vector2Int(x,y));
+                    gridBackgroundCells[x, y] = cell;
+                }
+            }
+
+            // Set size
+            UpdateGrid();
+
+            // Subscribe dimention change
+            boundsView.onBoundsChange.AddListener(UpdateGrid);
+        }
+
+        /// <summary>
+        /// Update background
+        /// </summary>
+        private void UpdateGrid()
+        {
+            // For each column
+            for (int x = 0; x < gridPresenter.Columns; x++)
+            {
+                // For each row
+                for (int y = 0; y < gridPresenter.Rows; y++)
+                {
+                    // Create and initialize cell
+                    var cell = gridBackgroundCells[x, y];
+                    cell.Initialize(new Vector2Int(x, y));
                 }
             }
 
