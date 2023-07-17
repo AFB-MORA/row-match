@@ -203,6 +203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   padding: {x: 0.2, y: 0.2, z: 2.1, w: 0.2}
+  onBoundsChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &234564913
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +332,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   padding: {x: 0, y: 0, z: 0, w: 0}
+  onBoundsChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &507133860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,9 +1289,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1016647031
+  m_SortingLayer: 1
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: df8d252eae0474f2688311c00d5d0448, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
