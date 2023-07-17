@@ -154,8 +154,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
         /// </summary>
         private async void GameOver()
         {
+            // Dispose swipe
             swipeDisposable?.Dispose();
             swipeDisposable = null;
+
+            // Set game over
+            gamePresenter.GameOver();
 
             // Open game over popup
             Hashtable args = new Hashtable();
@@ -163,11 +167,13 @@ namespace Com.AFBiyik.MatchRow.GameScene.Controller
             args["highScore"] = gamePresenter.HighScore.Value;
             args["score"] = gamePresenter.Score.Value;
 
+            // Wait until animations complete
             if (gamePresenter.AnimatingViews.Count > 0)
             {
                 await UniTask.WaitUntil(() => gamePresenter.AnimatingViews.Count == 0);
             }
 
+            // Open popup
             popupController.Open(PopupConstants.GAME_OVER_POPUP, args);
         }
 

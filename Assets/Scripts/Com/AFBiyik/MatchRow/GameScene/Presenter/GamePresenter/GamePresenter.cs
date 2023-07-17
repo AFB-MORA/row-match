@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Util;
@@ -15,6 +16,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         private readonly ReactiveProperty<int> moveCount;
         private readonly ILevelManager levelManager;
         private readonly LevelModel levelModel;
+        private readonly Subject<object> onGameOver;
 
         // Public Properties
         /// <inheritdoc/>
@@ -32,6 +34,9 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <inheritdoc/>
         public HashSet<GameObject> AnimatingViews { get; set; }
 
+        /// <inheritdoc/>
+        public IObservable<object> OnGameOver => onGameOver;
+
         /// <summary>
         /// Creates grid presenter with level model
         /// </summary>
@@ -45,6 +50,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
             IsHighScore = false;
             AnimatingViews = new HashSet<GameObject>();
+            onGameOver = new Subject<object>();
         }
 
         /// <inheritdoc/>
@@ -71,6 +77,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 
             // return has moves
             return moveCount.Value > 0;
+        }
+
+        /// <inheritdoc/>
+        public void GameOver()
+        {
+            onGameOver.OnNext(null);
         }
     }
 }

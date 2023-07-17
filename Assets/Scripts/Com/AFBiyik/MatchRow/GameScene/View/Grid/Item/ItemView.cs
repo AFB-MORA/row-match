@@ -1,9 +1,12 @@
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using Zenject;
+using static UnityEditor.Progress;
 
 namespace Com.AFBiyik.MatchRow.GameScene.View
 {
@@ -26,18 +29,28 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         [SerializeField]
         private SpriteRenderer completedObject;
 
-        // Private fields
-        private Vector2Int gridPosition;
-
         // Dependencies
         [Inject]
         private IGridPresenter gridPresenter;
         [Inject]
         private IGamePresenter gamePresenter;
 
+        // Private fields
+        private Vector2Int gridPosition;
+        private MaterialPropertyBlock imagePropertyBlock;
+        private MaterialPropertyBlock completedPropertyBlock;
+
         // Public Properties
         public ItemType ItemType => itemType;
         public Vector2Int GridPosition => gridPosition;
+
+        private void Awake()
+        {
+            // Subscribe to game over
+            gamePresenter.OnGameOver
+                .TakeUntilDestroy(gameObject)
+                .Subscribe(OnGameOver);
+        }
 
         /// <summary>
         /// Initializes item
@@ -45,6 +58,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// <param name="gridPosition"></param>
         public void Initialize(Vector2Int gridPosition)
         {
+            // Set property block
+            imagePropertyBlock = new MaterialPropertyBlock();
+            image.GetPropertyBlock(imagePropertyBlock);
+            completedPropertyBlock = new MaterialPropertyBlock();
+            completedObject.GetPropertyBlock(completedPropertyBlock);
+
             // Set grid position
             this.gridPosition = gridPosition;
 
@@ -119,6 +138,23 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
                 image.transform.DOScale(new Vector3(0, 0, 0), SCALE_TWEEN_TIME).ToUniTask());
             // Disable image
             image.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Called when game is over
+        /// </summary>
+        /// <param name="_">null</param>
+        private async void OnGameOver(object _)
+        {
+            await UniTask.Delay((int)((MOVE_TWEEN_TIME) * 1000));
+
+            await NumberTween.TweenFloat(0, 1, 0.6f, (value) =>
+            {
+                imagePropertyBlock.SetFloat("_EffectAmount", value);
+                completedPropertyBlock.SetFloat("_EffectAmount", value);
+                image.SetPropertyBlock(imagePropertyBlock);
+                completedObject.SetPropertyBlock(completedPropertyBlock);
+            });
         }
     }
 }
