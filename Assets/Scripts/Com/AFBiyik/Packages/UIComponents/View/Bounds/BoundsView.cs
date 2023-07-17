@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com.AFBiyik.UIComponents
 {
@@ -16,6 +17,10 @@ namespace Com.AFBiyik.UIComponents
 
         // Private Fields
         protected Rect? rect;
+        protected float currectAspect;
+
+        // Public Properties
+        public UnityEvent onBoundsChange;
 
         // Public Properties
         public Rect Rect => rect ??= GetRect();
@@ -28,6 +33,7 @@ namespace Com.AFBiyik.UIComponents
         {
             // Get cam
             Camera cam = Camera.main;
+            currectAspect = cam.aspect;
 
             // Get sizes
             float aspect = cam.aspect;
@@ -49,17 +55,17 @@ namespace Com.AFBiyik.UIComponents
             return new Rect(offset, size);
         }
 
-#if UNITY_EDITOR
         protected virtual void Update()
         {
-            if (!Application.isPlaying)
+            if (currectAspect != Camera.main.aspect)
             {
                 // Update rect.
-                // Editor only
                 rect = GetRect();
+                onBoundsChange?.Invoke();
             }
         }
 
+#if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
         {
             // Draw bounds

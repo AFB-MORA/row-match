@@ -13,7 +13,7 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         LevelModel CurrentLevel { get; }
 
         /// <summary>
-        /// Sets current level and opens game scene.
+        /// Sets current level and opens level scene.
         /// </summary>
         /// <param name="levelModel">Current level model</param>
         void PlayLevel(LevelModel levelModel);

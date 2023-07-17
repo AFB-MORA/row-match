@@ -38,6 +38,12 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         /// <param name="level">Level number</param>
         public async void SetLevel(int level)
         {
+            // Set fields
+            levelText.SetValues(level.ToString(), "    ");
+            highScoreText.gameObject.SetActive(false);
+            lockText.SetActive(true);
+            playButton.Interactable = false;
+
             // Get level model
             levelModel = null;
             try
@@ -52,11 +58,6 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
             // If error
             if (levelModel == null)
             {
-                // Set fields
-                levelText.SetValues(level.ToString(), "?");
-                highScoreText.gameObject.SetActive(false);
-                lockText.SetActive(true);
-                playButton.Interactable = false;
                 return;
             }
 

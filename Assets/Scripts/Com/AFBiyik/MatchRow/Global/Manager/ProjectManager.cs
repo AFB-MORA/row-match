@@ -30,7 +30,7 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         public void PlayLevel(LevelModel levelModel)
         {
             CurrentLevel = levelModel;
-            OpenScene(SceneConstants.GAME_SCENE);
+            OpenScene(SceneConstants.LEVEL_SCENE);
         }
 
         /// <inheritdoc/>

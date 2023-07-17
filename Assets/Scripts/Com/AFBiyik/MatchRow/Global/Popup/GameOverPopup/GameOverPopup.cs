@@ -26,7 +26,7 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         [SerializeField]
         private TMP_Text scoreValue;
         [SerializeField]
-        private GameObject highScoreView;
+        private GameObject celebrationView;
         [SerializeField]
         private GameObject normalView;
 
@@ -45,7 +45,7 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
             int highScore = (int)args["highScore"];
 
             // Enable views
-            highScoreView.SetActive(isHighScore);
+            celebrationView.SetActive(isHighScore);
             normalView.SetActive(!isHighScore);
 
             // Set high score text

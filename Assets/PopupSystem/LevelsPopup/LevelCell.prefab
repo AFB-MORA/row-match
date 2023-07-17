@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8017192295178169448
 RectTransform:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 00 - 00 Moves
+  m_text: Level  -  Moves
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fcdbdea126b174a34a1aadc0bb771d44, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f67c40d20d96a4ec09473fe35426cb22, type: 2}
@@ -1161,7 +1161,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4009770772728485130}
   m_maskType: 0
 --- !u!1 &7766522304744523931
@@ -1182,7 +1182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3404191376497331467
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Highest Score: 123456789'
+  m_text: 'Highest Score: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fcdbdea126b174a34a1aadc0bb771d44, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f67c40d20d96a4ec09473fe35426cb22, type: 2}

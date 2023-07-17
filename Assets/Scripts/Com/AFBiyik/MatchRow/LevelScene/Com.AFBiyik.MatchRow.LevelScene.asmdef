@@ -1,0 +1,29 @@
+{
+    "name": "Com.AFBiyik.MatchRow.LevelScene",
+    "rootNamespace": "",
+    "references": [
+        "UniRx",
+        "Unity.InputSystem",
+        "UniTask",
+        "Zenject",
+        "Com.AFBiyik.Factory",
+        "Unity.TextMeshPro",
+        "Com.AFBiyik.UIComponents",
+        "Com.AFBiyik.MatchRow.Global.LevelSystem",
+        "Com.AFBiyik.MatchRow.Global",
+        "DOTween.Modules",
+        "UniTask.DOTween",
+        "Com.AFBiyik.PopupSystem",
+        "Unity.2D.SpriteShape.Runtime",
+        "Com.AFBiyik.Pool"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
