@@ -88,6 +88,8 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - sound
+    - music
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 67f4ff66678f44fa293332f68b27b533, type: 2}
