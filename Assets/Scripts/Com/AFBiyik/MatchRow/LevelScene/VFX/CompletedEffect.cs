@@ -1,4 +1,6 @@
 using System;
+using Com.AFBiyik.AudioSystem;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.MatchRow.LevelScene.Presenter;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -47,6 +49,8 @@ namespace Com.AFBiyik.MatchRow.LevelScene.VFX
             // Add to animating views
             Guid animation = Guid.NewGuid();
             gamePresenter.AnimatingViews.Add(animation);
+
+
 
             // Enable game object
             gameObject.SetActive(true);

@@ -1,5 +1,7 @@
 using System.Collections;
+using Com.AFBiyik.AudioSystem;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.PopupSystem;
 using Com.AFBiyik.UIComponents;
 using UnityEngine;
@@ -23,6 +25,8 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         private ILevelManager levelManager;
         [Inject]
         private IFactory<GameObject, GameObject> prefabFactory;
+        [Inject]
+        private ISoundController2d soundController;
 
         // Protected Properties
         protected override string CloseState => null;
@@ -48,6 +52,9 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
 
             // Reset content position
             recycleView.SetFistItemIndex(level - 1);
+
+            // Play sound
+            soundController.PlaySound(new Sound(SoundConstants.POPUP, volume: 0.8f));
         }
 
         /// <inheritdoc/>
@@ -71,6 +78,10 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         /// </summary>
         public void CloseClick()
         {
+            // Play sound
+            soundController.PlaySound(new Sound(SoundConstants.CLICK, volume: 0.2f));
+
+            // Close popup
             ClosePopup();
         }
     }

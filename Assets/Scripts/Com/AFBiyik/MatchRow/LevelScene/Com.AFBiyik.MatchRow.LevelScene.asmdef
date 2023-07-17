@@ -15,7 +15,8 @@
         "UniTask.DOTween",
         "Com.AFBiyik.PopupSystem",
         "Unity.2D.SpriteShape.Runtime",
-        "Com.AFBiyik.Pool"
+        "Com.AFBiyik.Pool",
+        "Com.AFBiyik.AudioSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

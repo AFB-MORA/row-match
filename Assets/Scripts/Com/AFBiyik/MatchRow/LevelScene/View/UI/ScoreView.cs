@@ -1,7 +1,10 @@
 using System;
+using Com.AFBiyik.AudioSystem;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.MatchRow.LevelScene.VFX;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using Zenject;
 
 namespace Com.AFBiyik.MatchRow.LevelScene.View
 {
@@ -10,6 +13,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
     /// </summary>
     public class ScoreView : BaseValueView
     {
+        [Inject]
+        private ISoundController2d soundController;
+
         protected override void SubscribeValue()
         {
             // Subscribe score value
@@ -28,6 +34,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
             {
                 // Wait move animation
                 await UniTask.Delay((int)(CompletedEffect.SCORE_MOVE_TWEEN_TIME * 1000));
+
+                // Play sound
+                soundController.PlaySound(new Sound(SoundConstants.SCORE, volume: 0.03f));
             }
 
             // Change value

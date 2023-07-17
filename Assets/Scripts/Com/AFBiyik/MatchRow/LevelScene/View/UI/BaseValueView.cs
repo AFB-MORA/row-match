@@ -1,5 +1,5 @@
-using Com.AFBiyik.MatchRow.LevelScene.Presenter;
 using Com.AFBiyik.MatchRow.Global.Util;
+using Com.AFBiyik.MatchRow.LevelScene.Presenter;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -65,6 +65,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
                 return;
             }
 
+            // Tween
             await NumberTween.TweenInt(value, newValue, TWEEN_TIME, (value) =>
             {
                 valueText.text = value.ToString();

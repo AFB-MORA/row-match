@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using Com.AFBiyik.AudioSystem;
+using Com.AFBiyik.MatchRow.Global.Popup;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.MatchRow.LevelScene.Enumeration;
 using Com.AFBiyik.MatchRow.LevelScene.Input;
 using Com.AFBiyik.MatchRow.LevelScene.Presenter;
 using Com.AFBiyik.MatchRow.LevelScene.Util;
-using Com.AFBiyik.MatchRow.LevelScene.VFX;
 using Com.AFBiyik.MatchRow.LevelScene.View;
-using Com.AFBiyik.MatchRow.Global.Popup;
 using Com.AFBiyik.PopupSystem;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -21,13 +21,11 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Controller
     /// </summary>
     public class GameController : IDisposable
     {
-        // Constants
-        private const float TOTAL_ANIMATION_TIME = CompletedEffect.SCORE_MOVE_TWEEN_TIME + 1;
-
         // Private Readonly Fields
         private readonly IGridPresenter gridPresenter;
         private readonly IGamePresenter gamePresenter;
         private readonly IPopupController popupController;
+        private readonly ISoundController2d soundController;
 
         // Private Fields
         private IDisposable swipeDisposable;
@@ -37,7 +35,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Controller
         /// </summary>
         /// <param name="swipeEvent">Swipe Event</param>
         /// <param name="gridPresenter">Grid Presenter</param>
-        public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter, IGamePresenter gamePresenter, IPopupController popupController)
+        public GameController(ISwipeEvent swipeEvent, IGridPresenter gridPresenter, IGamePresenter gamePresenter, IPopupController popupController, ISoundController2d soundController)
         {
             // Set grid presenter
             this.gridPresenter = gridPresenter;
@@ -47,6 +45,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Controller
 
             // Set popup controller
             this.popupController = popupController;
+
+            // Set sound controller
+            this.soundController = soundController;
 
             // Subscribe swipe event
             swipeDisposable = swipeEvent.OnSwipe
@@ -131,6 +132,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Controller
             // Swap grid items
             gridPresenter.SwapItems(itemIndex, nextIndex);
 
+            // Play sound
+            soundController.PlaySound(new Sound(SoundConstants.SWIPE, volume: 0.2f));
+
             // Check Rows
             CheckRows();
 
@@ -158,6 +162,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Controller
             // Dispose swipe
             swipeDisposable?.Dispose();
             swipeDisposable = null;
+
+            // Play sound
+            soundController.PlaySound(new Sound(SoundConstants.GAME_OVER, volume: 0.2f));
 
             // Set game over
             gamePresenter.GameOver();
@@ -229,253 +236,14 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Controller
         /// <param name="firstItem"></param>
         private void CompleteRow(int row, ItemType firstItem)
         {
+            // Play sound
+            soundController.PlaySound(new Sound(SoundConstants.POP, volume: 0.2f));
+
             // Set row completed
             gridPresenter.CompleteRow(row);
 
             // Update score
             gamePresenter.UpdateScore(firstItem, gridPresenter.Columns);
         }
-
-
-        ///// <summary>
-        ///// Chech is there any move
-        ///// </summary>
-        ///// <returns>True if has moves; otherwise false.</returns>
-        //private bool HasMoves()
-        //{
-        //    // Get isolated items
-        //    var isolatedItems = GetIsolatedItems();
-
-        //    // Check has enough items to complete row
-        //    if (!HasEnoughItems(isolatedItems))
-        //    {
-        //        return false;
-        //    }
-
-        //    // Check can move items to row with row count
-        //    if (!CanCompleteRow(isolatedItems))
-        //    {
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// Checks is there enough items to complete the row.
-        ///// </summary>
-        ///// <returns>True if there is enough item; otherwise false.</returns>
-        //private bool HasEnoughItems(List<List<ItemType>> isolatedItems)
-        //{
-        //    // For each isolated group
-        //    return isolatedItems.Select(
-        //            // Group by item type
-        //            list => list.GroupBy(item => item)
-        //            // Map item type to count in isolated group
-        //            .Select(group => (item: group.Key, count: group.Count()))
-        //        // For each isolated group
-        //        ).Any(
-        //            // Check is there enough item to complete row
-        //            list => list.Any(group => group.count >= gridPresenter.Columns)
-        //        );
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <returns></returns>
-        //private bool CanCompleteRow(List<List<ItemType>> isolatedItems)
-        //{
-        //    int minMove = int.MaxValue;
-
-        //    int columns = gridPresenter.Columns;
-
-        //    var solutionGroups = isolatedItems
-        //        // Map item list and item type to count
-        //        .Select(list =>
-        //            (list, counts:
-        //            // Group by item type
-        //            list.GroupBy(item => item)
-        //            // Map item type to count in isolated group
-        //            .Select(group => (item: group.Key, count: group.Count())))
-        //            )
-        //        .Where(enumerated => enumerated.counts.Any(group => group.count >= columns));
-
-        //    // For each isolated group that has solution
-        //    foreach (var solutionGroup in solutionGroups)
-        //    {
-        //        // Calculate rows (at least 2)
-        //        int rows = solutionGroup.list.Count / columns;
-
-        //        // Initialize sub grid
-        //        List<List<ItemType>> subGrid = new List<List<ItemType>>(rows);
-        //        for (int y = 0; y < rows; y++)
-        //        {
-        //            subGrid.Add(new List<ItemType>(columns));
-
-        //            for (int x = 0; x < columns; x++)
-        //            {
-        //                subGrid[y].Add(solutionGroup.list[x + y * columns]);
-        //            }
-        //        }
-
-        //        // Find items that can be solution
-        //        var solutionItems = solutionGroup.counts.Where(group => group.count >= columns)
-        //            .Select(tuple => tuple.item);
-
-        //        // For each items
-        //        // Find min number of moves to complete the row
-        //        foreach (var item in solutionItems)
-        //        {
-        //            List<List<ItemType>> cloneSubGrid = subGrid.Select(list => list.Select(item => item).ToList()).ToList();
-
-        //            // Find row item counts
-        //            var rowItemCounts = cloneSubGrid
-        //                .Select((row, index) => (itemCount:
-        //                    row.Count(rowItem => rowItem == item),
-        //                    index)
-        //                );
-
-        //            // Find max item count
-        //            var maxItemCount = rowItemCounts.Max(tuple => tuple.itemCount);
-
-        //            // Find row with max item count
-        //            int y = rowItemCounts
-        //                .First(tuple => tuple.itemCount == maxItemCount).index;
-
-
-        //            int totalMoves = 0;
-        //            // Foreach missing piece
-        //            for (int x = 0; x < columns; x++)
-        //            {
-        //                // If item at column is not target item
-        //                if (cloneSubGrid[y][x] != item)
-        //                {
-        //                    // Find closest point
-        //                    totalMoves += GetClosestItem(cloneSubGrid, item, x, y, rows, columns);
-        //                }
-
-        //            }
-
-        //            // If new min moves
-        //            if (totalMoves < minMove)
-        //            {
-        //                minMove = totalMoves;
-        //            }
-
-        //            // We find the solution within the move count
-        //            if (minMove <= gamePresenter.MoveCount.Value)
-        //            {
-        //                return true;
-        //            }
-
-        //        }
-        //    }
-
-        //    return false;
-        //}
-
-        //private int GetClosestItem(List<List<ItemType>> subGrid, ItemType target, int x, int y, int rows, int columns)
-        //{
-
-        //    List<List<bool>> visited = new List<List<bool>>(rows);
-
-        //    for (int yy = 0; yy < rows; yy++)
-        //    {
-        //        visited.Add(new List<bool>(columns));
-
-        //        for (int xx = 0; xx < columns; xx++)
-        //        {
-        //            visited[yy].Add(false);
-        //        }
-        //    }
-
-        //    GetClosestItemRecursive(subGrid, visited, target, x, y, y, rows, columns, out int count);
-        //    return count;
-        //}
-
-        //private bool GetClosestItemRecursive(List<List<ItemType>> subGrid, List<List<bool>> visited, ItemType target, int x, int y, int notY, int rows, int columns, out int count)
-        //{
-        //    count = 0;
-
-        //    if (visited[y][x])
-        //    {
-        //        return false;
-        //    }
-
-        //    visited[y][x] = true;
-
-        //    if (subGrid[y][x] == target)
-        //    {
-        //        subGrid[y][x] = ItemType.Completed;
-        //        return true;
-        //    }
-
-        //    // up
-        //    if (y + 1 < rows && y + 1 != notY && GetClosestItemRecursive(subGrid, visited, target, x, y + 1, notY, rows, columns, out count))
-        //    {
-        //        count++;
-        //        return true;
-        //    }
-        //    // down
-        //    else if (y - 1 >= 0 && y - 1 != notY && GetClosestItemRecursive(subGrid, visited, target, x, y - 1, notY, rows, columns, out count))
-        //    {
-        //        count++;
-        //        return true;
-        //    }
-        //    // right
-        //    else if (x + 1 < columns && y != notY && GetClosestItemRecursive(subGrid, visited, target, x + 1, y, notY, rows, columns, out count))
-        //    {
-        //        count++;
-        //        return true;
-        //    }
-        //    // left
-        //    else if (x - 1 >= 0 && y != notY && GetClosestItemRecursive(subGrid, visited, target, x - 1, y, notY, rows, columns, out count))
-        //    {
-        //        count++;
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
-
-        //private List<List<ItemType>> GetIsolatedItems()
-        //{
-        //    // Isolate groups divided by completed rows
-        //    List<List<ItemType>> isolatedItems = new List<List<ItemType>>();
-        //    bool hasGroup = false;
-        //    int lastIsolatedGroup = -1;
-
-        //    // For each row
-        //    for (int y = 0; y < gridPresenter.Rows; y++)
-        //    {
-        //        // Get fist item
-        //        int firstIndex = gridPresenter.GetItemIndex(new Vector2Int(0, y));
-        //        var firstItem = gridPresenter.Grid[firstIndex];
-
-        //        // if not completed
-        //        if (firstItem != ItemType.Completed)
-        //        {
-        //            // if no current group
-        //            if (!hasGroup)
-        //            {
-        //                hasGroup = true;
-        //                isolatedItems.Add(new List<ItemType>());
-        //                lastIsolatedGroup++;
-        //            }
-
-        //            // add row to group
-        //            isolatedItems[lastIsolatedGroup].AddRange(gridPresenter.GetItemsAtRow(y));
-
-        //        }
-        //        else
-        //        {
-        //            hasGroup = false;
-        //        }
-
-        //    }
-
-        //    return isolatedItems;
-        //}
     }
 }

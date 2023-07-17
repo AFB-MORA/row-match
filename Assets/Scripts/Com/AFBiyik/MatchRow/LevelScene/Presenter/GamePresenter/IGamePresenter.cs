@@ -25,7 +25,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
         /// <summary>
         /// Game over event
         /// </summary>
-        IObservable<object> OnGameOver { get; }
+        IObservable<bool> OnGameOver { get; }
 
         /// <summary>
         /// True if high score changed; otherwise false

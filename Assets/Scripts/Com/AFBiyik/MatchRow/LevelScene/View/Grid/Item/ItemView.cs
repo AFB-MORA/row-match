@@ -152,9 +152,14 @@ namespace Com.AFBiyik.MatchRow.LevelScene.View
         /// <summary>
         /// Called when game is over
         /// </summary>
-        /// <param name="_">null</param>
-        private async void OnGameOver(object _)
+        /// <param name="isHighScore"></param>
+        private async void OnGameOver(bool isHighScore)
         {
+            if (isHighScore)
+            {
+                return;
+            }
+
             // Add to animating views
             Guid animation = Guid.NewGuid();
             gamePresenter.AnimatingViews.Add(animation);

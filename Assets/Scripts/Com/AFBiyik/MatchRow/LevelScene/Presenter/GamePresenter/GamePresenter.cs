@@ -16,7 +16,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
         private readonly ReactiveProperty<int> moveCount;
         private readonly ILevelManager levelManager;
         private readonly LevelModel levelModel;
-        private readonly Subject<object> onGameOver;
+        private readonly Subject<bool> onGameOver;
 
         // Public Properties
         /// <inheritdoc/>
@@ -35,7 +35,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
         public HashSet<Guid> AnimatingViews { get; set; }
 
         /// <inheritdoc/>
-        public IObservable<object> OnGameOver => onGameOver;
+        public IObservable<bool> OnGameOver => onGameOver;
 
         /// <summary>
         /// Creates grid presenter with level model
@@ -50,7 +50,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
             IsHighScore = false;
             AnimatingViews = new HashSet<Guid>();
-            onGameOver = new Subject<object>();
+            onGameOver = new Subject<bool>();
         }
 
         /// <inheritdoc/>
@@ -82,7 +82,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Presenter
         /// <inheritdoc/>
         public void GameOver()
         {
-            onGameOver.OnNext(null);
+            onGameOver.OnNext(IsHighScore);
         }
     }
 }
