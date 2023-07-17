@@ -12,7 +12,9 @@
         "UniTask",
         "Unity.TextMeshPro",
         "Com.AFBiyik.LanguageSystem",
-        "UniTask.DOTween"
+        "UniTask.DOTween",
+        "Com.AFBiyik.AudioSystem",
+        "UniRx"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

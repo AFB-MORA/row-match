@@ -1,7 +1,9 @@
 using System;
+using Com.AFBiyik.AudioSystem;
 using Com.AFBiyik.LanguageSystem;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using Com.AFBiyik.MatchRow.Global.Manager;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using Zenject;
@@ -28,6 +30,8 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         private ILevelManager levelManager;
         [Inject]
         private IProjectManager projectManager;
+        [Inject]
+        private ISoundController2d soundController;
 
         // Private Fields
         private LevelModel levelModel;
@@ -78,6 +82,10 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         /// </summary>
         public void PlayClick()
         {
+            // Play sound
+            soundController.PlaySound(new Sound(SoundConstants.CLICK, volume: 0.2f));
+
+            // Open level
             projectManager.PlayLevel(levelModel);
         }
     }
