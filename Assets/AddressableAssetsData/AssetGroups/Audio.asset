@@ -21,37 +21,47 @@ MonoBehaviour:
     m_Address: Swipe
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
   - m_GUID: 1572a0601c89340708b329e44cbcc1c0
     m_Address: Celebration
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
   - m_GUID: 570e5fffbd1eb490ba979b2333dca51e
     m_Address: Click
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
   - m_GUID: d8e7afde7513848bf94d7eb2f459b239
     m_Address: Score
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
   - m_GUID: 5b962cf413c8140d6977c55bf9c5e3f0
     m_Address: Popup
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
   - m_GUID: 468fdb41492364789b8363bc7f5a585e
     m_Address: Pop
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
   - m_GUID: 1d5cc9354ddb7439db85ac8eacf03ef6
     m_Address: GameOver
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Sound
+    - sound
+  - m_GUID: 0ffc02e02412f4d75a66562321075f95
+    m_Address: Star
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sound
+  - m_GUID: 86694d22af6484d539dac3737e1fd193
+    m_Address: Music
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - music
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ac00afe463414278b33dfdfcb8b8a97, type: 2}
   m_SchemaSet:

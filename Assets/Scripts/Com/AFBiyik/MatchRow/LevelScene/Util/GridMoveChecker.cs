@@ -102,17 +102,45 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
             // Get columns
             int columns = gridPresenter.Columns;
 
-            // Get solution groups wit item count
-            var solutionGroups = isolatedItems
+            // Get solution groups with item count
+            List<(List<ItemType> list, Dictionary<ItemType, int> counts)> solutionGroups = new List<(List<ItemType> list, Dictionary<ItemType, int> counts)>();
+            for (int i = 0; i < isolatedItems.Count; i++)
+            {
                 // Map item list and item type to count
-                .Select(list =>
-                    (list, counts:
-                    // Group by item type
-                    list.GroupBy(item => item)
+                var list = isolatedItems[i];
+
+                // Group by item type
+                Dictionary<ItemType, int> counts = new Dictionary<ItemType, int>();
+                for (int j = 0; j < list.Count; j++)
+                {
                     // Map item type to count in isolated group
-                    .Select(group => (item: group.Key, count: group.Count())).ToList())
-                    )
-                .Where(enumerated => enumerated.counts.Any(group => group.count >= columns)).ToList();
+                    var item = list[j];
+                    if (!counts.ContainsKey(item))
+                    {
+                        counts[item] = 0;
+                    }
+
+                    counts[item]++;
+                }
+
+                // Check can row be made
+                bool found = false;
+                foreach (var pair in counts)
+                {
+                    if (pair.Value >= columns)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                // If solution
+                if (found)
+                {
+                    solutionGroups.Add((list, counts));
+                }
+            }
+
 
             // For each isolated group that has solution
             foreach (var solutionGroup in solutionGroups)
@@ -135,26 +163,31 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
         /// <param name="columns"></param>
         /// <param name="moveCount"></param>
         /// <returns>True if can complete; otherwise false</returns>
-        private static bool CanCompleteSolutionGroup((List<ItemType> list, IEnumerable<(ItemType item, int count)> counts) solutionGroup, int columns, int moveCount)
+        private static bool CanCompleteSolutionGroup((List<ItemType> list, Dictionary<ItemType, int> counts) solutionGroup, int columns, int moveCount)
         {
             // Calculate rows (at least 2)
             int rows = solutionGroup.list.Count / columns;
 
             // Initialize sub grid
-            List<List<ItemType>> subGrid = new List<List<ItemType>>(rows);
+            ItemType[,] subGrid = new ItemType[columns, rows];
+
             for (int y = 0; y < rows; y++)
             {
-                subGrid.Add(new List<ItemType>(columns));
-
                 for (int x = 0; x < columns; x++)
                 {
-                    subGrid[y].Add(solutionGroup.list[x + y * columns]);
+                    subGrid[x, y] = solutionGroup.list[x + y * columns];
                 }
             }
 
             // Find items that can be solution
-            var solutionItems = solutionGroup.counts.Where(group => group.count >= columns)
-                .Select(tuple => tuple.item).ToList();
+            List<ItemType> solutionItems = new List<ItemType>();
+            foreach (var pair in solutionGroup.counts)
+            {
+                if (pair.Value >= columns)
+                {
+                    solutionItems.Add(pair.Key);
+                }
+            }
 
             // For each items
             // Find min number of moves to complete the row
@@ -180,23 +213,34 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
         /// <param name="columns">Number of columns</param>
         /// <param name="moveCount">Move count</param>
         /// <returns>True if can complete; otherwise false</returns>
-        private static bool CanCompleteSolutionGroupForItem(ItemType item, List<List<ItemType>> subGrid, int rows, int columns, int moveCount)
+        private static bool CanCompleteSolutionGroupForItem(ItemType item, ItemType[,] subGrid, int rows, int columns, int moveCount)
         {
             // Copy sub grid
-            List<List<ItemType>> cloneSubGrid = subGrid.Select(list => list.Select(item => item).ToList()).ToList();
-
             // Find row item counts
-            var rowItemCounts = cloneSubGrid
-                .Select((row, index) => (itemCount:
-                    row.Count(rowItem => rowItem == item),
-                    index)
-                ).ToList();
+            ItemType[,] cloneSubGrid = new ItemType[columns, rows];
+            List<(int itemCount, int index)> rowItemCounts = new List<(int itemCount, int index)>(rows);
+            for (int y = 0; y < rows; y++)
+            {
+                int count = 0;
+
+                for (int x = 0; x < columns; x++)
+                {
+                    cloneSubGrid[x, y] = subGrid[x, y];
+
+                    if (cloneSubGrid[x, y] == item)
+                    {
+                        count++;
+                    }
+                }
+
+                rowItemCounts.Add((count, y));
+            }
 
             // Find max item count
             var maxItemCount = rowItemCounts.Max(tuple => tuple.itemCount);
 
             // Find row with max item count
-            int y = rowItemCounts
+            int targetY = rowItemCounts
                 .First(tuple => tuple.itemCount == maxItemCount).index;
 
 
@@ -205,10 +249,10 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
             for (int x = 0; x < columns; x++)
             {
                 // If item at column is not target item
-                if (cloneSubGrid[y][x] != item)
+                if (cloneSubGrid[x, targetY] != item)
                 {
                     // Find closest point
-                    totalMoves += GetClosestItemDistance(cloneSubGrid, item, x, y, rows, columns);
+                    totalMoves += GetClosestItemDistance(cloneSubGrid, item, x, targetY, rows, columns);
                 }
             }
 
@@ -226,7 +270,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
         /// <param name="rows">Number of rows</param>
         /// <param name="columns">Number of coulumns</param>
         /// <returns>Distance</returns>
-        private static int GetClosestItemDistance(List<List<ItemType>> subGrid, ItemType target, int x, int y, int rows, int columns)
+        private static int GetClosestItemDistance(ItemType[,] subGrid, ItemType target, int x, int y, int rows, int columns)
         {
             // Get item psoition
             var closestPosition = GetClosestItemPosition(subGrid, target, x, y, rows, columns);
@@ -238,7 +282,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
             }
 
             // Update point
-            subGrid[closestPosition.y][closestPosition.x] = ItemType.Completed;
+            subGrid[closestPosition.x, closestPosition.y] = ItemType.Completed;
 
             // Get distance
             return Mathf.Abs(x - closestPosition.x) + Mathf.Abs(y - closestPosition.y);
@@ -255,7 +299,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
         /// <param name="rows">Number of rows</param>
         /// <param name="columns">Number of coulumns</param>
         /// <returns>Position</returns>
-        private static Vector2Int GetClosestItemPosition(List<List<ItemType>> subGrid, ItemType target, int x, int y, int rows, int columns)
+        private static Vector2Int GetClosestItemPosition(ItemType[,] subGrid, ItemType target, int x, int y, int rows, int columns)
         {
             // Get max distance
             int maxDistance = rows + columns - 1;
@@ -326,7 +370,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
         /// <param name="xClosest">Closest point x position</param>
         /// <param name="yClosest">Closest point y position</param>
         /// <returns>True if point found; otherwise false</returns>
-        private static bool TestPoint(int xTest, int yTest, int notY, List<List<ItemType>> subGrid, ItemType target, int rows, int columns, out int xClosest, out int yClosest)
+        private static bool TestPoint(int xTest, int yTest, int notY, ItemType[,] subGrid, ItemType target, int rows, int columns, out int xClosest, out int yClosest)
         {
             // Assign closest point
             xClosest = -1;
@@ -352,9 +396,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
         /// <param name="x">X position</param>
         /// <param name="y">Y position</param>
         /// <returns>True if item is target item; otherwise false.</returns>
-        private static bool CheckPoint(List<List<ItemType>> subGrid, ItemType target, int x, int y)
+        private static bool CheckPoint(ItemType[,] subGrid, ItemType target, int x, int y)
         {
-            return subGrid[y][x] == target;
+            return subGrid[x, y] == target;
         }
 
         /// <summary>

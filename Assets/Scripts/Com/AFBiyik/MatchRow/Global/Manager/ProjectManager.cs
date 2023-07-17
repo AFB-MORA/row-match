@@ -6,6 +6,7 @@ using Com.AFBiyik.MatchRow.Global.Util;
 using Com.AFBiyik.PopupSystem;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Com.AFBiyik.MatchRow.Global.Manager
@@ -27,6 +28,8 @@ namespace Com.AFBiyik.MatchRow.Global.Manager
         {
             this.musicController = musicController;
             this.popupController = popupController;
+
+            Application.targetFrameRate = 60;
 
             popupController.PreloadPopups(new List<string>() { PopupConstants.LEVELS_POPUP, PopupConstants.GAME_OVER_POPUP });
 
