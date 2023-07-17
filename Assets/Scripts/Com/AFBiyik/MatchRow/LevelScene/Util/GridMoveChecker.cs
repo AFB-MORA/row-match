@@ -110,9 +110,9 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
                     // Group by item type
                     list.GroupBy(item => item)
                     // Map item type to count in isolated group
-                    .Select(group => (item: group.Key, count: group.Count())).ToList())
+                    .Select(group => (item: group.Key, count: group.Count())))
                     )
-                .Where(enumerated => enumerated.counts.Any(group => group.count >= columns)).ToList();
+                .Where(enumerated => enumerated.counts.Any(group => group.count >= columns));
 
             // For each isolated group that has solution
             foreach (var solutionGroup in solutionGroups)
@@ -154,7 +154,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
 
             // Find items that can be solution
             var solutionItems = solutionGroup.counts.Where(group => group.count >= columns)
-                .Select(tuple => tuple.item).ToList();
+                .Select(tuple => tuple.item);
 
             // For each items
             // Find min number of moves to complete the row
@@ -190,7 +190,7 @@ namespace Com.AFBiyik.MatchRow.LevelScene.Util
                 .Select((row, index) => (itemCount:
                     row.Count(rowItem => rowItem == item),
                     index)
-                ).ToList();
+                );
 
             // Find max item count
             var maxItemCount = rowItemCounts.Max(tuple => tuple.itemCount);
