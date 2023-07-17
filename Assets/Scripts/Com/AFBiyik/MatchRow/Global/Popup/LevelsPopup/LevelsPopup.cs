@@ -43,8 +43,11 @@ namespace Com.AFBiyik.MatchRow.Global.Popup
         public override void OnOpened(Hashtable args)
         {
             base.OnOpened(args);
+
+            int level = levelManager.GetLastLevel();
+
             // Reset content position
-            recycleView.SetContentPosition(Vector2.zero);
+            recycleView.SetFistItemIndex(level - 1);
         }
 
         /// <inheritdoc/>

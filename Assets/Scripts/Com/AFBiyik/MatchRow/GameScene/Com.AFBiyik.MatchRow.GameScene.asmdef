@@ -14,7 +14,8 @@
         "DOTween.Modules",
         "UniTask.DOTween",
         "Com.AFBiyik.PopupSystem",
-        "Unity.2D.SpriteShape.Runtime"
+        "Unity.2D.SpriteShape.Runtime",
+        "Com.AFBiyik.Pool"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

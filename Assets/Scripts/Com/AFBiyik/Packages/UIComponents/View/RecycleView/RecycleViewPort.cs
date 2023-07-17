@@ -13,6 +13,8 @@ namespace Com.AFBiyik.UIComponents
     {
         // Serialize Fields
         [SerializeField]
+        protected bool generateMask = true;
+        [SerializeField]
         protected int pixelsPerUnit = 100;
 
         // Private Fields
@@ -69,6 +71,11 @@ namespace Com.AFBiyik.UIComponents
         /// </summary>
         private void SetBounds()
         {
+            if (!generateMask)
+            {
+                return;
+            }
+
             var size = RectTransform.rect.size * pixelsPerUnit;
             Texture2D texture = new Texture2D((int)size.x, (int)size.y);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect);

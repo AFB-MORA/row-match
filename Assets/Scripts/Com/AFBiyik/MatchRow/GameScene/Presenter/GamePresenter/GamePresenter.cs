@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Util;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using UniRx;
+using UnityEngine;
 
 namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 {
@@ -13,6 +16,7 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         private readonly ReactiveProperty<int> moveCount;
         private readonly ILevelManager levelManager;
         private readonly LevelModel levelModel;
+        private readonly Subject<object> onGameOver;
 
         // Public Properties
         /// <inheritdoc/>
@@ -27,6 +31,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
         /// <inheritdoc/>
         public bool IsHighScore { get; private set; }
 
+        /// <inheritdoc/>
+        public HashSet<Guid> AnimatingViews { get; set; }
+
+        /// <inheritdoc/>
+        public IObservable<object> OnGameOver => onGameOver;
+
         /// <summary>
         /// Creates grid presenter with level model
         /// </summary>
@@ -39,27 +49,14 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
             highScore = new ReactiveProperty<int>(levelModel.HighScore);
             moveCount = new ReactiveProperty<int>(levelModel.MoveCount);
             IsHighScore = false;
+            AnimatingViews = new HashSet<Guid>();
+            onGameOver = new Subject<object>();
         }
 
         /// <inheritdoc/>
         public void UpdateScore(ItemType itemType, int columns)
         {
-            int scoreToAdd = 0;
-            switch (itemType)
-            {
-                case ItemType.Red:
-                    scoreToAdd = GameConstants.RED_SCORE;
-                    break;
-                case ItemType.Green:
-                    scoreToAdd = GameConstants.GREEN_SCORE;
-                    break;
-                case ItemType.Blue:
-                    scoreToAdd = GameConstants.BLUE_SCORE;
-                    break;
-                case ItemType.Yellow:
-                    scoreToAdd = GameConstants.YELLOW_SCORE;
-                    break;
-            }
+            int scoreToAdd = GameConstants.GetScore(itemType);
 
             score.Value += scoreToAdd * columns;
 
@@ -80,6 +77,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.Presenter
 
             // return has moves
             return moveCount.Value > 0;
+        }
+
+        /// <inheritdoc/>
+        public void GameOver()
+        {
+            onGameOver.OnNext(null);
         }
     }
 }

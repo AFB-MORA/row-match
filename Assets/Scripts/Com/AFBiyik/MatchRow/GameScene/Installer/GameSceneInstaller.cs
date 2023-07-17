@@ -4,9 +4,11 @@ using Com.AFBiyik.MatchRow.GameScene.Controller;
 using Com.AFBiyik.MatchRow.GameScene.Factory;
 using Com.AFBiyik.MatchRow.GameScene.Input;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using Com.AFBiyik.MatchRow.GameScene.VFX;
 using Com.AFBiyik.MatchRow.GameScene.View;
 using Com.AFBiyik.MatchRow.Global.LevelSystem;
 using Com.AFBiyik.MatchRow.Global.Manager;
+using Com.AFBiyik.Pool;
 using Com.AFBiyik.UIComponents;
 using UnityEngine;
 using Zenject;
@@ -23,23 +25,51 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
         private BoundsView gridBounds;
         [SerializeField]
         private List<ItemView> itemPrefabs;
+        [SerializeField]
+        private CompletedEffect completedEffectPrefab;
+        [SerializeField]
+        private Transform completedEffectParent;
 
         public override void InstallBindings()
         {
-            // Level Model
-            Container.Bind<LevelModel>()
-                .FromMethod(GetLevelModel)
-                .AsSingle();
+            BindLevelModel();
+            BindPresenters();
+            BindFactories();
+            BindPools();
+            BindInput();
+            BindGameController();
+        }
 
-            // GridPresenter
-            Container.BindInterfacesTo<GridPresenter>()
+        private void BindGameController()
+        {
+            // Game Controller
+            Container.BindInterfacesTo<GameController>()
                 .AsSingle()
-                .WithArguments(gridBounds.Rect);
+                .NonLazy();
+        }
 
-            // GridPresenter
-            Container.BindInterfacesTo<GamePresenter>()
+        private void BindInput()
+        {
+            // ISwipeEvent
+            Container.BindInterfacesTo<SwipeManager>()
                 .AsSingle();
+        }
 
+        private void BindPools()
+        {
+            // Install pool
+            MonoMemoryPoolInstaller<CompletedEffect>.Install(Container, completedEffectPrefab, completedEffectParent,
+                new MemoryPoolSettings(
+                    // Initial size
+                    9,
+                    // Max size
+                    int.MaxValue,
+                    // Expand Mode
+                    PoolExpandMethods.OneAtATime));
+        }
+
+        private void BindFactories()
+        {
             // GridBackgroundCell Factory
             Container.BindInterfacesTo<GenericPrefabFactory<GridBackgroundCell>>()
                 .AsSingle();
@@ -48,15 +78,26 @@ namespace Com.AFBiyik.MatchRow.GameScene.Installer
             Container.BindInterfacesTo<ItemFactory>()
                 .AsSingle()
                 .WithArguments(itemPrefabs);
+        }
 
-            // ISwipeEvent
-            Container.BindInterfacesTo<SwipeManager>()
-                .AsSingle();
-
-            // Game Controller
-            Container.BindInterfacesTo<GameController>()
+        private void BindPresenters()
+        {
+            // GridPresenter
+            Container.BindInterfacesTo<GridPresenter>()
                 .AsSingle()
-                .NonLazy();
+                .WithArguments(gridBounds.Rect);
+
+            // GridPresenter
+            Container.BindInterfacesTo<GamePresenter>()
+                .AsSingle();
+        }
+
+        private void BindLevelModel()
+        {
+            // Level Model
+            Container.Bind<LevelModel>()
+                    .FromMethod(GetLevelModel)
+                    .AsSingle();
         }
 
         private LevelModel GetLevelModel()

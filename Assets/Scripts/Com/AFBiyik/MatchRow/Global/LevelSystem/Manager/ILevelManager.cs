@@ -27,5 +27,11 @@ namespace Com.AFBiyik.MatchRow.Global.LevelSystem
         /// <param name="level">Level number</param>
         /// <param name="score">High score</param>
         void SetHighScore(int level, int score);
+
+        /// <summary>
+        /// Get last unlocked level.
+        /// </summary>
+        /// <returns>Level number</returns>
+        int GetLastLevel();
     }
 }

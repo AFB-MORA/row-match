@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using Com.AFBiyik.MatchRow.GameScene.Util;
+using Com.AFBiyik.MatchRow.GameScene.VFX;
 using UniRx;
 using UnityEngine;
-using UnityEngine.U2D;
 using Zenject;
 
 namespace Com.AFBiyik.MatchRow.GameScene.View
@@ -12,6 +13,8 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
     {
         // Serialize Fields
         [SerializeField]
+        private Transform scoreView;
+        [SerializeField]
         private Transform itemsContent;
 
         // Dependencies
@@ -19,6 +22,10 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         private IGridPresenter gridPresenter;
         [Inject]
         private IFactory<ItemType, Transform, ItemView> itemFactory;
+        [Inject]
+        private IGamePresenter gamePresenter;
+        [Inject]
+        private IMemoryPool<CompletedEffect> completedEffectPool;
 
         // Private Fields
         private List<ItemView> items;
@@ -77,9 +84,37 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// Called when list item replaces
         /// </summary>
         /// <param name="event"></param>
-        private void OnReplace(CollectionReplaceEvent<ItemType> replaceEvent)
+        private async void OnReplace(CollectionReplaceEvent<ItemType> replaceEvent)
         {
-            items[replaceEvent.Index].UpdateType(replaceEvent.NewValue);
+            // Get item
+            var item = items[replaceEvent.Index];
+            // Update item
+            item.UpdateType(replaceEvent.NewValue);
+
+            // Get grid position
+            Vector2Int gridPos = gridPresenter.GetItemGridPosition(replaceEvent.Index);
+
+            // Get position
+            float size2 = gridPresenter.CellSize / 2f;
+            Vector2 pos = gridPresenter.GridPositionToWorldPosition(gridPos) + new Vector2(size2, size2);
+
+            // Get effect
+            var effect = completedEffectPool.Spawn();
+
+            // Get old item type
+            ItemType itemType = replaceEvent.OldValue;
+
+            // Get colors
+            (Color from, Color to) = GameConstants.GetColors(itemType);
+
+            // Get score
+            int score = GameConstants.GetScore(itemType);
+
+            // Start effect
+            await effect.Show(from, to, pos, scoreView.position, score);
+
+            // Despawn effect
+            completedEffectPool.Despawn(effect);
         }
     }
 }

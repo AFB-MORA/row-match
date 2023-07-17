@@ -142,9 +142,23 @@ namespace Com.AFBiyik.UIComponents
         {
             // Update position
             content.anchoredPosition = anchoredPosition;
+            CheckLimit(0);
             firstItemIndex = -1;
             CheckItemPositions();
         }
+
+        /// <summary>
+        /// Updates content position
+        /// </summary>
+        /// <param name="anchoredPosition">Content anchored position</param>
+        public void SetFistItemIndex(int index)
+        {
+            float position = index * dataSource.ItemHeight +
+                (index == 0 ? 0 : index * spacing) - padding.x;
+
+            SetContentPosition(new Vector2(0, position));
+        }
+
 
         /// <summary>
         /// Creates initial items for scroll
@@ -389,16 +403,25 @@ namespace Com.AFBiyik.UIComponents
         /// </summary>
         private void CheckLimit()
         {
+            CheckLimit(scrollLimit);
+        }
+
+
+        /// <summary>
+        /// Check content limit
+        /// </summary>
+        private void CheckLimit(float limitPadding)
+        {
             // If upper limit
-            if (content.anchoredPosition.y < -2)
+            if (content.anchoredPosition.y < -limitPadding)
             {
                 // Stop inertia
                 inertiaSpeed = 0;
                 // Set position
-                content.anchoredPosition = new Vector2(content.anchoredPosition.x, -scrollLimit);
+                content.anchoredPosition = new Vector2(content.anchoredPosition.x, -limitPadding);
             }
             // If lower limit
-            else if (content.rect.height - content.anchoredPosition.y < RectTransform.rect.height - scrollLimit)
+            else if (content.rect.height - content.anchoredPosition.y < RectTransform.rect.height - limitPadding)
             {
                 // If content height is longer than height
                 if (content.rect.height >= ((RectTransform)transform).rect.height)
@@ -406,7 +429,7 @@ namespace Com.AFBiyik.UIComponents
                     // Stop inertia
                     inertiaSpeed = 0;
                     // Set position
-                    content.anchoredPosition = new Vector2(content.anchoredPosition.x, content.rect.height - RectTransform.rect.height + scrollLimit);
+                    content.anchoredPosition = new Vector2(content.anchoredPosition.x, content.rect.height - RectTransform.rect.height + limitPadding);
                 }
                 // If content height is shorter than height and down limit
                 else

@@ -1,12 +1,19 @@
+using System;
 using Com.AFBiyik.MatchRow.GameScene.Enumeration;
 using Com.AFBiyik.MatchRow.GameScene.Presenter;
+using Com.AFBiyik.MatchRow.Global.Util;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using Zenject;
+using static UnityEditor.Progress;
 
 namespace Com.AFBiyik.MatchRow.GameScene.View
 {
+    /// <summary>
+    /// Grid item view
+    /// </summary>
     public class ItemView : MonoBehaviour
     {
         // Constants
@@ -23,16 +30,28 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         [SerializeField]
         private SpriteRenderer completedObject;
 
-        // Private fields
-        private Vector2Int gridPosition;
-
         // Dependencies
         [Inject]
         private IGridPresenter gridPresenter;
+        [Inject]
+        private IGamePresenter gamePresenter;
+
+        // Private fields
+        private Vector2Int gridPosition;
+        private MaterialPropertyBlock imagePropertyBlock;
+        private MaterialPropertyBlock completedPropertyBlock;
 
         // Public Properties
         public ItemType ItemType => itemType;
         public Vector2Int GridPosition => gridPosition;
+
+        private void Awake()
+        {
+            // Subscribe to game over
+            gamePresenter.OnGameOver
+                .TakeUntilDestroy(gameObject)
+                .Subscribe(OnGameOver);
+        }
 
         /// <summary>
         /// Initializes item
@@ -40,6 +59,12 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// <param name="gridPosition"></param>
         public void Initialize(Vector2Int gridPosition)
         {
+            // Set property block
+            imagePropertyBlock = new MaterialPropertyBlock();
+            image.GetPropertyBlock(imagePropertyBlock);
+            completedPropertyBlock = new MaterialPropertyBlock();
+            completedObject.GetPropertyBlock(completedPropertyBlock);
+
             // Set grid position
             this.gridPosition = gridPosition;
 
@@ -49,11 +74,15 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
             // Set position
             transform.position = gridPresenter.GridPositionToWorldPosition(gridPosition);
 
-            // Set cell size
+            // Get cell size
             float size2 = gridPresenter.CellSize / 2f;
+            // Set image
             image.size = new Vector2(gridPresenter.CellSize, gridPresenter.CellSize);
+            image.transform.localPosition = new Vector3(size2, size2, 0);
+            // Set completed object
             completedObject.size = new Vector2(gridPresenter.CellSize, gridPresenter.CellSize);
             completedObject.transform.localPosition = new Vector3(size2, size2, 0);
+            // Set collider
             circleCollider.radius = size2;
             circleCollider.offset = new Vector2(circleCollider.radius, circleCollider.radius);
 
@@ -65,14 +94,21 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// Moves item to new grid position.
         /// </summary>
         /// <param name="gridPosition">New grid position</param>
-        public void MoveTo(Vector2Int gridPosition)
+        public async void MoveTo(Vector2Int gridPosition)
         {
+            // Add to animating views
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
+
             // Set grid position
             this.gridPosition = gridPosition;
 
             // Set position
             var newPosition = gridPresenter.GridPositionToWorldPosition(gridPosition);
-            transform.DOMove(newPosition, MOVE_TWEEN_TIME);
+            await transform.DOMove(newPosition, MOVE_TWEEN_TIME);
+
+            // Remove from animating views
+            gamePresenter.AnimatingViews.Remove(animation);
         }
 
         /// <summary>
@@ -93,13 +129,45 @@ namespace Com.AFBiyik.MatchRow.GameScene.View
         /// </summary>
         private async void ShowCompleted()
         {
+            // Wait for move
             await UniTask.Delay((int)(MOVE_TWEEN_TIME * 1000));
+            // Set completed
             completedObject.gameObject.SetActive(true);
             completedObject.color = new Color(1, 1, 1, 0);
+            // Animate
             await UniTask.WhenAll(
                 completedObject.DOFade(1, SCALE_TWEEN_TIME).ToUniTask(),
                 image.transform.DOScale(new Vector3(0, 0, 0), SCALE_TWEEN_TIME).ToUniTask());
+            // Disable image
             image.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Called when game is over
+        /// </summary>
+        /// <param name="_">null</param>
+        private async void OnGameOver(object _)
+        {
+            // Add to animating views
+            Guid animation = Guid.NewGuid();
+            gamePresenter.AnimatingViews.Add(animation);
+
+            // Wait
+            await UniTask.Delay((int)(MOVE_TWEEN_TIME * 1000) + 100 * gridPosition.y);
+
+            // Tween
+            await NumberTween.TweenFloat(0, 1, 0.4f, (value) =>
+            {
+                imagePropertyBlock.SetFloat("_EffectAmount", value);
+                completedPropertyBlock.SetFloat("_EffectAmount", value);
+                image.SetPropertyBlock(imagePropertyBlock);
+                completedObject.SetPropertyBlock(completedPropertyBlock);
+            });
+
+            await UniTask.Delay(150);
+
+            // Remove from animating views
+            gamePresenter.AnimatingViews.Remove(animation);
         }
     }
 }
